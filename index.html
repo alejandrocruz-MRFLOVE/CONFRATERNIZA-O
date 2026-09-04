@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página Pessoal - 3º Trimestre</title>
+    <!-- FontAwesome para ícones modernos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --card-border: #334155;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent-blue: #38bdf8;
+            --accent-green: #22c55e;
+            --accent-amber: #f59e0b;
+            --accent-purple: #c084fc;
+            --danger: #ef4444;
+            --input-bg: #0f172a;
+            --shadow: rgba(0, 0, 0, 0.3);
+        }
+
+        [data-theme="light"] {
+            --bg-color: #f1f5f9;
+            --card-bg: #ffffff;
+            --card-border: #e2e8f0;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --accent-blue: #0284c7;
+            --accent-green: #16a34a;
+            --accent-amber: #d97706;
+            --accent-purple: #9333ea;
+            --danger: #dc2626;
+            --input-bg: #f8fafc;
+            --shadow: rgba(0, 0, 0, 0.08);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            padding: 20px 15px;
+            min-height: 100vh;
+        }
+
+        .header-wrapper {
+            max-width: 1100px;
+            margin: 0 auto 25px auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 20px 30px;
+            box-shadow: 0 10px 25px -5px var(--shadow);
+        }
+
+        .header-title h1 {
+            font-size: 1.8rem;
+            color: var(--accent-blue);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header-title p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-top: 4px;
+        }
+
+        .theme-toggle-btn {
+            background: var(--input-bg);
+            border: 1px solid var(--card-border);
+            color: var(--text-main);
+            padding: 10px 16px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+        }
+
+        .theme-toggle-btn:hover {
+            border-color: var(--accent-blue);
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* BARRA DE PROGRESSO GERAL */
+        .progress-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 15px var(--shadow);
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .progress-bar-bg {
+            background-color: var(--input-bg);
+            border: 1px solid var(--card-border);
+            height: 14px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-green));
+            height: 100%;
+            width: 0%;
+            border-radius: 10px;
+            transition: width 0.5s ease-in-out;
+        }
+
+        /* FILTRO / BUSCA */
+        .search-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 4px 15px var(--shadow);
+        }
+
+        .search-card i {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        .search-card input {
+            width: 100%;
+            background: transparent;
+            border: none;
+            color: var(--text-main);
+            font-size: 1rem;
+            outline: none;
+        }
+
+        /* GRID PRINCIPAL */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 25px;
+        }
+
+        @media (min-width: 900px) {
+            .main-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 15px var(--shadow);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card h2 {
+            font-size: 1.25rem;
+            color: var(--text-main);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid var(--card-border);
+            padding-bottom: 12px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 10px;
+            position: relative;
+        }
+
+        .form-row > * {
+            flex: 1;
+        }
+
+        .ai-hint {
+            font-size: 0.75rem;
+            color: var(--accent-purple);
+            margin-top: -8px;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-weight: 500;
+        }
+
+        input, select, textarea {
+            background-color: var(--input-bg);
+            border: 1px solid var(--card-border);
+            color: var(--text-main);
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            outline: none;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: var(--accent-blue);
+        }
+
+        button.btn-add {
+            background-color: var(--accent-blue);
+            color: #ffffff;
+            font-weight: 600;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 2px 8px var(--shadow);
+        }
+
+        button.btn-add:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        .item-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .item-card {
+            background-color: var(--input-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 10px;
+            padding: 16px;
+            position: relative;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .item-card:hover {
+            border-color: var(--accent-blue);
+            transform: translateY(-2px);
+        }
+
+        .item-card.concluido {
+            opacity: 0.65;
+            border-left: 5px solid var(--accent-green);
+        }
+
+        .item-card.pendente {
+            border-left: 5px solid var(--accent-amber);
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 8px;
+            gap: 10px;
+        }
+
+        .item-title {
+            font-weight: 600;
+            font-size: 1.05rem;
+            color: var(--text-main);
+        }
+
+        .badges-wrapper {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            font-size: 0.72rem;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .badge-materia {
+            background-color: rgba(192, 132, 252, 0.15);
+            color: var(--accent-purple);
+            border: 1px solid rgba(192, 132, 252, 0.3);
+        }
+
+        .badge-alta {
+            background-color: rgba(239, 68, 68, 0.15);
+            color: var(--danger);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .badge-media {
+            background-color: rgba(245, 158, 11, 0.15);
+            color: var(--accent-amber);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+
+        .badge-baixa {
+            background-color: rgba(34, 197, 94, 0.15);
+            color: var(--accent-green);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+        }
+
+        .item-desc {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+
+        .item-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            font-size: 0.85rem;
+            padding-top: 10px;
+            border-top: 1px dashed var(--card-border);
+        }
+
+        .tag-countdown {
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
+
+        .countdown-urgente {
+            background-color: rgba(239, 68, 68, 0.2);
+            color: var(--danger);
+        }
+
+        .countdown-ok {
+            background-color: rgba(56, 189, 248, 0.2);
+            color: var(--accent-blue);
+        }
+
+        .item-actions {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .btn-action {
+            background: transparent;
+            border: 1px solid var(--card-border);
+            color: var(--text-muted);
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .btn-action:hover {
+            color: var(--text-main);
+            border-color: var(--accent-blue);
+        }
+
+        .btn-delete {
+            color: var(--danger);
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            font-size: 0.9rem;
+            padding: 5px;
+        }
+
+        .btn-delete:hover {
+            opacity: 0.7;
+        }
+
+        .btn-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            color: var(--accent-blue);
+            text-decoration: none;
+            font-size: 0.85rem;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .btn-link:hover {
+            text-decoration: underline;
+        }
+
+        .empty-state {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            padding: 25px;
+            border: 1px dashed var(--card-border);
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header-wrapper">
+        <div class="header-title">
+            <h1><i class="fa-solid fa-graduation-cap"></i> Página Pessoal - 3º Trimestre</h1>
+            <p>Acompanhamento de Trabalhos Desenvolvidos e Avaliações</p>
+        </div>
+        <button class="theme-toggle-btn" id="theme-toggle">
+            <i class="fa-solid fa-moon"></i> <span>Modo Escuro</span>
+        </button>
+    </header>
+
+    <div class="container">
+        <!-- BARRA DE PROGRESSO GERAL -->
+        <div class="progress-card">
+            <div class="progress-header">
+                <span><i class="fa-solid fa-chart-line"></i> Progresso do Trimestre</span>
+                <span id="progress-text">0% Concluído</span>
+            </div>
+            <div class="progress-bar-bg">
+                <div class="progress-bar-fill" id="progress-fill"></div>
+            </div>
+        </div>
+
+        <!-- BARRA DE PESQUISA / FILTRO -->
+        <div class="search-card">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" id="search-input" placeholder="Pesquisar por título ou matéria...">
+        </div>
+
+        <div class="main-grid">
+            <!-- SEÇÃO: TRABALHOS DESENVOLVIDOS -->
+            <section class="card">
+                <h2><i class="fa-solid fa-folder-open"></i> Trabalhos Desenvolvidos</h2>
+                
+                <form id="form-trabalho">
+                    <div class="form-row">
+                        <input type="text" id="t-titulo" placeholder="Título do trabalho" required>
+                        <input type="text" id="t-materia" placeholder="Matéria" required>
+                    </div>
+                    <div id="ai-hint-t" class="ai-hint" style="display: none;">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i> <span id="ai-hint-text-t"></span>
+                    </div>
+                    <textarea id="t-descricao" placeholder="Descrição rápida do projeto..." rows="2" required></textarea>
+                    <div class="form-row">
+                        <input type="text" id="t-link" placeholder="Link (GitHub / Drive / Canva)">
+                        <select id="t-prioridade">
+                            <option value="Baixa">Prioridade: Baixa</option>
+                            <option value="Média" selected>Prioridade: Média</option>
+                            <option value="Alta">Prioridade: Alta</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn-add"><i class="fa-solid fa-plus"></i> Registrar Trabalho</button>
+                </form>
+
+                <ul id="lista-trabalhos" class="item-list"></ul>
+            </section>
+
+            <!-- SEÇÃO: REGISTRO DE AVALIAÇÕES -->
+            <section class="card">
+                <h2><i class="fa-solid fa-calendar-days"></i> Datas de Avaliações</h2>
+
+                <form id="form-avaliacao">
+                    <div class="form-row">
+                        <input type="text" id="a-titulo" placeholder="Assunto/Conteúdo da Prova" required>
+                        <input type="text" id="a-materia" placeholder="Matéria" required>
+                    </div>
+                    <div id="ai-hint-a" class="ai-hint" style="display: none;">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i> <span id="ai-hint-text-a"></span>
+                    </div>
+                    <div class="form-row">
+                        <input type="date" id="a-data" required>
+                        <select id="a-prioridade">
+                            <option value="Baixa">Prioridade: Baixa</option>
+                            <option value="Média" selected>Prioridade: Média</option>
+                            <option value="Alta">Prioridade: Alta</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn-add"><i class="fa-solid fa-plus"></i> Agendar Avaliação</button>
+                </form>
+
+                <ul id="lista-avaliacoes" class="item-list"></ul>
+            </section>
+        </div>
+    </div>
+
+    <script>
+        // Mapeamento de Palavras-Chave para IA
+        const dicionarioIA = [
+            { palavras: ['python', 'c++', 'codigo', 'orientada', 'poo', 'algoritmo', 'sistema', 'site', 'html', 'css', 'javascript', 'backend', 'frontend'], materia: 'Programação' },
+            { palavras: ['robo', 'robotica', 'arduino', 'sensor', 'circuito', 'motor', 'automaçao'], materia: 'Robótica' },
+            { palavras: ['pas', 'matematica', 'calculo', 'equaçao', 'geometria', 'algebra', 'funçao'], materia: 'Matemática' },
+            { palavras: ['redaçao', 'texto', 'portugues', 'gramatica', 'literatura', 'livro', 'poema'], materia: 'Português' },
+            { palavras: ['fisica', 'movimento', 'força', 'velocidade', 'energia', 'mecanica'], materia: 'Física' },
+            { palavras: ['quimica', 'tabela', 'atomo', 'reaçao', 'massa'], materia: 'Química' },
+            { palavras: ['historia', 'brasil', 'guerra', 'seculo', 'revoluçao'], materia: 'História' },
+            { palavras: ['geografia', 'mapa', 'relevo', 'clima', 'populaçao'], materia: 'Geografia' },
+            { palavras: ['ingles', 'english', 'verb', 'reading'], materia: 'Inglês' },
+            { palavras: ['contabilidade', 'financeiro', 'planilha', 'excel', 'administraçao', 'balanço'], materia: 'Contabilidade' }
+        ];
+
+        // Função da IA para prever a matéria
+        function adivinharMateria(textoInput) {
+            const textoNormalizado = textoInput.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+            for (let item of dicionarioIA) {
+                if (item.palavras.some(palavra => textoNormalizado.includes(palavra))) {
+                    return item.materia;
+                }
+            }
+            return null;
+        }
+
+        // Função de IA/Validador para Arrumar Links
+        function arrumarLink(url) {
+            if (!url) return '';
+            let limpo = url.trim();
+            if (!limpo.startsWith('http://') && !limpo.startsWith('https://')) {
+                limpo = 'https://' + limpo;
+            }
+            return limpo;
+        }
+
+        // Detectar ao digitar nos inputs de título
+        document.getElementById('t-titulo').addEventListener('input', (e) => {
+            const materiaInput = document.getElementById('t-materia');
+            const hintBox = document.getElementById('ai-hint-t');
+            const hintText = document.getElementById('ai-hint-text-t');
+            
+            const sugerido = adivinharMateria(e.target.value);
+            if (sugerido && !materiaInput.value) {
+                materiaInput.value = sugerido;
+                hintText.innerText = `IA identificou a matéria: ${sugerido}`;
+                hintBox.style.display = 'flex';
+            } else if (!sugerido) {
+                hintBox.style.display = 'none';
+            }
+        });
+
+        document.getElementById('a-titulo').addEventListener('input', (e) => {
+            const materiaInput = document.getElementById('a-materia');
+            const hintBox = document.getElementById('ai-hint-a');
+            const hintText = document.getElementById('ai-hint-text-a');
+            
+            const sugerido = adivinharMateria(e.target.value);
+            if (sugerido && !materiaInput.value) {
+                materiaInput.value = sugerido;
+                hintText.innerText = `IA identificou a matéria: ${sugerido}`;
+                hintBox.style.display = 'flex';
+            } else if (!sugerido) {
+                hintBox.style.display = 'none';
+            }
+        });
+
+        // ESTADO DE DADOS
+        let trabalhos = JSON.parse(localStorage.getItem('trabalhos_3trim')) || [];
+        let avaliacoes = JSON.parse(localStorage.getItem('avaliacoes_3trim')) || [];
+        let termoBusca = '';
+
+        // TEMA (LIGHT/DARK)
+        const themeBtn = document.getElementById('theme-toggle');
+        const temaSalvo = localStorage.getItem('theme_3trim') || 'dark';
+
+        function aplicarTema(tema) {
+            if (tema === 'light') {
+                document.documentElement.setAttribute('data-theme', 'light');
+                themeBtn.innerHTML = '<i class="fa-solid fa-sun"></i> <span>Modo Claro</span>';
+            } else {
+                document.documentElement.removeAttribute('data-theme');
+                themeBtn.innerHTML = '<i class="fa-solid fa-moon"></i> <span>Modo Escuro</span>';
+            }
+            localStorage.setItem('theme_3trim', tema);
+        }
+
+        themeBtn.addEventListener('click', () => {
+            const temaAtual = document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+            aplicarTema(temaAtual === 'dark' ? 'light' : 'dark');
+        });
+
+        aplicarTema(temaSalvo);
+
+        // SALVAR NO LOCALSTORAGE E ATUALIZAR BARRA DE PROGRESSO
+        function salvarEDisparar() {
+            localStorage.setItem('trabalhos_3trim', JSON.stringify(trabalhos));
+            localStorage.setItem('avaliacoes_3trim', JSON.stringify(avaliacoes));
+            atualizarProgresso();
+        }
+
+        function atualizarProgresso() {
+            const total = trabalhos.length + avaliacoes.length;
+            if (total === 0) {
+                document.getElementById('progress-text').innerText = '0% Concluído';
+                document.getElementById('progress-fill').style.width = '0%';
+                return;
+            }
+
+            const concluidosTrabalhos = trabalhos.filter(t => t.status === 'Concluído').length;
+            const concluidosAvaliacoes = avaliacoes.filter(a => a.status === 'Concluído').length;
+            const porcentagem = Math.round(((concluidosTrabalhos + concluidosAvaliacoes) / total) * 100);
+
+            document.getElementById('progress-text').innerText = `${porcentagem}% Concluído`;
+            document.getElementById('progress-fill').style.width = `${porcentagem}%`;
+        }
+
+        // --- TRABALHOS ---
+        const formTrabalho = document.getElementById('form-trabalho');
+        const listaTrabalhos = document.getElementById('lista-trabalhos');
+
+        formTrabalho.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const rawLink = document.getElementById('t-link').value;
+            const linkCorrigido = arrumarLink(rawLink);
+
+            const novoTrabalho = {
+                id: Date.now(),
+                titulo: document.getElementById('t-titulo').value,
+                materia: document.getElementById('t-materia').value,
+                descricao: document.getElementById('t-descricao').value,
+                link: linkCorrigido,
+                prioridade: document.getElementById('t-prioridade').value,
+                status: 'Em andamento'
+            };
+            trabalhos.push(novoTrabalho);
+            salvarEDisparar();
+            renderTrabalhos();
+            formTrabalho.reset();
+            document.getElementById('ai-hint-t').style.display = 'none';
+        });
+
+        function renderTrabalhos() {
+            listaTrabalhos.innerHTML = '';
+            
+            const filtrados = trabalhos.filter(t => 
+                t.titulo.toLowerCase().includes(termoBusca) || 
+                t.materia.toLowerCase().includes(termoBusca)
+            );
+
+            if (filtrados.length === 0) {
+                listaTrabalhos.innerHTML = '<div class="empty-state">Nenhum trabalho encontrado.</div>';
+                return;
+            }
+
+            filtrados.forEach((item) => {
+                const li = document.createElement('li');
+                li.className = `item-card ${item.status === 'Concluído' ? 'concluido' : 'pendente'}`;
+                
+                const classePrioridade = item.prioridade === 'Alta' ? 'badge-alta' : item.prioridade === 'Média' ? 'badge-media' : 'badge-baixa';
+
+                li.innerHTML = `
+                    <div class="item-header">
+                        <span class="item-title">${item.titulo}</span>
+                        <div class="badges-wrapper">
+                            <span class="badge badge-materia">${item.materia}</span>
+                            <span class="badge ${classePrioridade}">${item.prioridade}</span>
+                        </div>
+                    </div>
+                    <div class="item-desc">${item.descricao}</div>
+                    ${item.link ? `<a href="${item.link}" target="_blank" class="btn-link"><i class="fa-solid fa-arrow-up-right-from-square"></i> Abrir Anexo / Projeto</a>` : ''}
+                    <div class="item-meta">
+                        <span>Status: <strong>${item.status}</strong></span>
+                        <div class="item-actions">
+                            <button class="btn-action" onclick="alternarStatusTrabalho(${item.id})"><i class="fa-solid fa-rotate"></i> Alternar Status</button>
+                            <button class="btn-delete" onclick="deletarTrabalho(${item.id})"><i class="fa-solid fa-trash"></i></button>
+                        </div>
+                    </div>
+                `;
+                listaTrabalhos.appendChild(li);
+            });
+        }
+
+        function alternarStatusTrabalho(id) {
+            trabalhos = trabalhos.map(t => {
+                if (t.id === id) {
+                    const proximos = { 'Pendente': 'Em andamento', 'Em andamento': 'Concluído', 'Concluído': 'Pendente' };
+                    t.status = proximos[t.status] || 'Pendente';
+                }
+                return t;
+            });
+            salvarEDisparar();
+            renderTrabalhos();
+        }
+
+        function deletarTrabalho(id) {
+            trabalhos = trabalhos.filter(t => t.id !== id);
+            salvarEDisparar();
+            renderTrabalhos();
+        }
+
+        // --- AVALIAÇÕES ---
+        const formAvaliacao = document.getElementById('form-avaliacao');
+        const listaAvaliacoes = document.getElementById('lista-avaliacoes');
+
+        formAvaliacao.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const novaAvaliacao = {
+                id: Date.now(),
+                titulo: document.getElementById('a-titulo').value,
+                materia: document.getElementById('a-materia').value,
+                data: document.getElementById('a-data').value,
+                prioridade: document.getElementById('a-prioridade').value,
+                status: 'Pendente'
+            };
+            avaliacoes.push(novaAvaliacao);
+            salvarEDisparar();
+            renderAvaliacoes();
+            formAvaliacao.reset();
+            document.getElementById('ai-hint-a').style.display = 'none';
+        });
+
+        function calcularContagem(dataString) {
+            const hoje = new Date();
+            hoje.setHours(0, 0, 0, 0);
+            
+            const partes = dataString.split('-');
+            const dataProva = new Date(partes[0], partes[1] - 1, partes[2]);
+
+            const diffTempo = dataProva - hoje;
+            const diffDias = Math.ceil(diffTempo / (1000 * 60 * 60 * 24));
+
+            if (diffDias < 0) return { texto: 'Já realizada', classe: 'countdown-urgente' };
+            if (diffDias === 0) return { texto: 'É hoje!', classe: 'countdown-urgente' };
+            if (diffDias === 1) return { texto: 'Amanhã!', classe: 'countdown-urgente' };
+            if (diffDias <= 3) return { texto: `Faltam ${diffDias} dias`, classe: 'countdown-urgente' };
+            return { texto: `Faltam ${diffDias} dias`, classe: 'countdown-ok' };
+        }
+
+        function renderAvaliacoes() {
+            listaAvaliacoes.innerHTML = '';
+
+            const filtrados = avaliacoes.filter(a => 
+                a.titulo.toLowerCase().includes(termoBusca) || 
+                a.materia.toLowerCase().includes(termoBusca)
+            );
+
+            if (filtrados.length === 0) {
+                listaAvaliacoes.innerHTML = '<div class="empty-state">Nenhuma avaliação encontrada.</div>';
+                return;
+            }
+
+            filtrados.sort((a, b) => new Date(a.data) - new Date(b.data));
+
+            filtrados.forEach((item) => {
+                const li = document.createElement('li');
+                li.className = `item-card ${item.status === 'Concluído' ? 'concluido' : 'pendente'}`;
+
+                const partes = item.data.split('-');
+                const dataFormatada = `${partes[2]}/${partes[1]}/${partes[0]}`;
+                const contagem = calcularContagem(item.data);
+                const classePrioridade = item.prioridade === 'Alta' ? 'badge-alta' : item.prioridade === 'Média' ? 'badge-media' : 'badge-baixa';
+
+                li.innerHTML = `
+                    <div class="item-header">
+                        <span class="item-title">${item.titulo}</span>
+                        <div class="badges-wrapper">
+                            <span class="badge badge-materia">${item.materia}</span>
+                            <span class="badge ${classePrioridade}">${item.prioridade}</span>
+                        </div>
+                    </div>
+                    <div class="item-meta" style="border-top: none; padding-top: 0;">
+                        <span>Data: <strong>${dataFormatada}</strong></span>
+                        ${item.status !== 'Concluído' ? `<span class="tag-countdown ${contagem.classe}"><i class="fa-regular fa-clock"></i> ${contagem.texto}</span>` : ''}
+                    </div>
+                    <div class="item-meta">
+                        <span>Status: <strong>${item.status}</strong></span>
+                        <div class="item-actions">
+                            <button class="btn-action" onclick="alternarStatusAvaliacao(${item.id})"><i class="fa-solid fa-check"></i> Alternar Status</button>
+                            <button class="btn-delete" onclick="deletarAvaliacao(${item.id})"><i class="fa-solid fa-trash"></i></button>
+                        </div>
+                    </div>
+                `;
+                listaAvaliacoes.appendChild(li);
+            });
+        }
+
+        function alternarStatusAvaliacao(id) {
+            avaliacoes = avaliacoes.map(a => {
+                if (a.id === id) {
+                    a.status = a.status === 'Pendente' ? 'Concluído' : 'Pendente';
+                }
+                return a;
+            });
+            salvarEDisparar();
+            renderAvaliacoes();
+        }
+
+        function deletarAvaliacao(id) {
+            avaliacoes = avaliacoes.filter(a => a.id !== id);
+            salvarEDisparar();
+            renderAvaliacoes();
+        }
+
+        // PESQUISA EM TEMPO REAL
+        document.getElementById('search-input').addEventListener('input', (e) => {
+            termoBusca = e.target.value.toLowerCase();
+            renderTrabalhos();
+            renderAvaliacoes();
+        });
+
+        // INICIALIZAÇÃO
+        atualizarProgresso();
+        renderTrabalhos();
+        renderAvaliacoes();
+    </script>
+</body>
+</html>
