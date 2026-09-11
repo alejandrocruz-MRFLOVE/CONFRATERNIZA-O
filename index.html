@@ -54,7 +54,7 @@
 
         .header-wrapper {
             max-width: 1100px;
-            margin: 0 auto 25px auto;
+            margin: 0 auto 20px auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -63,6 +63,8 @@
             border-radius: 16px;
             padding: 20px 30px;
             box-shadow: 0 10px 25px -5px var(--shadow);
+            flex-wrap: wrap;
+            gap: 15px;
         }
 
         .header-title h1 {
@@ -79,7 +81,13 @@
             margin-top: 4px;
         }
 
-        .theme-toggle-btn {
+        .header-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .theme-toggle-btn, .btn-secondary {
             background: var(--input-bg);
             border: 1px solid var(--card-border);
             color: var(--text-main);
@@ -90,11 +98,12 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
 
-        .theme-toggle-btn:hover {
+        .theme-toggle-btn:hover, .btn-secondary:hover {
             border-color: var(--accent-blue);
+            color: var(--accent-blue);
         }
 
         .container {
@@ -103,6 +112,63 @@
             display: flex;
             flex-direction: column;
             gap: 20px;
+        }
+
+        /* BANNER DE ALERTA URGENTE */
+        .urgent-alert {
+            background-color: rgba(239, 68, 68, 0.15);
+            border: 1px solid var(--danger);
+            border-radius: 12px;
+            padding: 15px 20px;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 4px 15px var(--shadow);
+        }
+
+        .urgent-alert i {
+            font-size: 1.5rem;
+            color: var(--danger);
+        }
+
+        /* STATS GRID */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .stat-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 4px 15px var(--shadow);
+        }
+
+        .stat-icon {
+            font-size: 1.8rem;
+            width: 45px;
+            height: 45px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--input-bg);
+        }
+
+        .stat-info h4 {
+            font-size: 1.2rem;
+            color: var(--text-main);
+        }
+
+        .stat-info p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
         }
 
         /* BARRA DE PROGRESSO GERAL */
@@ -355,6 +421,23 @@
             line-height: 1.4;
         }
 
+        .item-notes {
+            display: none;
+            margin-top: 10px;
+            padding: 10px;
+            background: var(--card-bg);
+            border: 1px dashed var(--card-border);
+            border-radius: 6px;
+            font-size: 0.85rem;
+        }
+
+        .item-notes textarea {
+            width: 100%;
+            margin-top: 5px;
+            resize: vertical;
+            min-height: 60px;
+        }
+
         .item-meta {
             display: flex;
             flex-wrap: wrap;
@@ -452,12 +535,51 @@
             <h1><i class="fa-solid fa-graduation-cap"></i> Página Pessoal - 3º Trimestre</h1>
             <p>Acompanhamento de Trabalhos Desenvolvidos e Avaliações</p>
         </div>
-        <button class="theme-toggle-btn" id="theme-toggle">
-            <i class="fa-solid fa-moon"></i> <span>Modo Escuro</span>
-        </button>
+        <div class="header-actions">
+            <button class="btn-secondary" onclick="exportarBackup()"><i class="fa-solid fa-download"></i> Exportar</button>
+            <button class="btn-secondary" onclick="document.getElementById('import-file').click()"><i class="fa-solid fa-upload"></i> Importar</button>
+            <input type="file" id="import-file" style="display: none;" accept=".json" onchange="importarBackup(event)">
+            <button class="theme-toggle-btn" id="theme-toggle">
+                <i class="fa-solid fa-moon"></i> <span>Modo Escuro</span>
+            </button>
+        </div>
     </header>
 
     <div class="container">
+        <!-- BANNER DE ALERTAS URGENTES -->
+        <div id="urgent-alert-box" class="urgent-alert" style="display: none;">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            <div>
+                <strong>Atenção! Avaliações Próximas:</strong>
+                <span id="urgent-alert-text">Você tem exames agendados para os próximos dias.</span>
+            </div>
+        </div>
+
+        <!-- CARDS DE ESTATÍSTICAS -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon" style="color: var(--accent-amber);"><i class="fa-solid fa-clock"></i></div>
+                <div class="stat-info">
+                    <h4 id="stat-pendentes">0</h4>
+                    <p>Tarefas Pendentes</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon" style="color: var(--danger);"><i class="fa-solid fa-calendar-day"></i></div>
+                <div class="stat-info">
+                    <h4 id="stat-provas-semana">0</h4>
+                    <p>Provas nos Próx. 7 Dias</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon" style="color: var(--accent-green);"><i class="fa-solid fa-circle-check"></i></div>
+                <div class="stat-info">
+                    <h4 id="stat-concluidos">0</h4>
+                    <p>Itens Concluídos</p>
+                </div>
+            </div>
+        </div>
+
         <!-- BARRA DE PROGRESSO GERAL -->
         <div class="progress-card">
             <div class="progress-header">
@@ -557,7 +679,6 @@
             return null;
         }
 
-        // Função de IA/Validador para Arrumar Links
         function arrumarLink(url) {
             if (!url) return '';
             let limpo = url.trim();
@@ -625,27 +746,129 @@
 
         aplicarTema(temaSalvo);
 
-        // SALVAR NO LOCALSTORAGE E ATUALIZAR BARRA DE PROGRESSO
+        // SALVAR NO LOCALSTORAGE E ATUALIZAR INTERFACE
         function salvarEDisparar() {
             localStorage.setItem('trabalhos_3trim', JSON.stringify(trabalhos));
             localStorage.setItem('avaliacoes_3trim', JSON.stringify(avaliacoes));
-            atualizarProgresso();
+            atualizarProgressoEStats();
+            verificarAlertasUrgentes();
         }
 
-        function atualizarProgresso() {
+        function atualizarProgressoEStats() {
             const total = trabalhos.length + avaliacoes.length;
+            const concluidosTrabalhos = trabalhos.filter(t => t.status === 'Concluído').length;
+            const concluidosAvaliacoes = avaliacoes.filter(a => a.status === 'Concluído').length;
+            const totalConcluidos = concluidosTrabalhos + concluidosAvaliacoes;
+
+            // Progresso Porcentagem
             if (total === 0) {
                 document.getElementById('progress-text').innerText = '0% Concluído';
                 document.getElementById('progress-fill').style.width = '0%';
-                return;
+            } else {
+                const porcentagem = Math.round((totalConcluidos / total) * 100);
+                document.getElementById('progress-text').innerText = `${porcentagem}% Concluído`;
+                document.getElementById('progress-fill').style.width = `${porcentagem}%`;
             }
 
-            const concluidosTrabalhos = trabalhos.filter(t => t.status === 'Concluído').length;
-            const concluidosAvaliacoes = avaliacoes.filter(a => a.status === 'Concluído').length;
-            const porcentagem = Math.round(((concluidosTrabalhos + concluidosAvaliacoes) / total) * 100);
+            // Stats Cards
+            document.getElementById('stat-pendentes').innerText = total - totalConcluidos;
+            document.getElementById('stat-concluidos').innerText = totalConcluidos;
 
-            document.getElementById('progress-text').innerText = `${porcentagem}% Concluído`;
-            document.getElementById('progress-fill').style.width = `${porcentagem}%`;
+            // Provas na semana
+            const hoje = new Date();
+            hoje.setHours(0, 0, 0, 0);
+            const em7Dias = new Date(hoje);
+            em7Dias.setDate(hoje.getDate() + 7);
+
+            const provasSemana = avaliacoes.filter(a => {
+                if (a.status === 'Concluído') return false;
+                const partes = a.data.split('-');
+                const d = new Date(partes[0], partes[1] - 1, partes[2]);
+                return d >= hoje && d <= em7Dias;
+            }).length;
+
+            document.getElementById('stat-provas-semana').innerText = provasSemana;
+        }
+
+        function verificarAlertasUrgentes() {
+            const hoje = new Date();
+            hoje.setHours(0, 0, 0, 0);
+
+            const urgentes = avaliacoes.filter(a => {
+                if (a.status === 'Concluído') return false;
+                const partes = a.data.split('-');
+                const d = new Date(partes[0], partes[1] - 1, partes[2]);
+                const diffDias = Math.ceil((d - hoje) / (1000 * 60 * 60 * 24));
+                return diffDias >= 0 && diffDias <= 3;
+            });
+
+            const alertBox = document.getElementById('urgent-alert-box');
+            const alertText = document.getElementById('urgent-alert-text');
+
+            if (urgentes.length > 0) {
+                const listaNomes = urgentes.map(u => `${u.materia} (${u.titulo})`).join(', ');
+                alertText.innerText = `Próximas avaliações em menos de 3 dias: ${listaNomes}`;
+                alertBox.style.display = 'flex';
+            } else {
+                alertBox.style.display = 'none';
+            }
+        }
+
+        // BACKUP E RESTAURAÇÃO
+        function exportarBackup() {
+            const dados = {
+                trabalhos,
+                avaliacoes,
+                dataBackup: new Date().toISOString()
+            };
+            const blob = new Blob([JSON.stringify(dados, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `backup_estudos_3trim_${new Date().toISOString().slice(0, 10)}.json`;
+            a.click();
+        }
+
+        function importarBackup(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const dados = JSON.parse(e.target.result);
+                    if (dados.trabalhos && dados.avaliacoes) {
+                        trabalhos = dados.trabalhos;
+                        avaliacoes = dados.avaliacoes;
+                        salvarEDisparar();
+                        renderTrabalhos();
+                        renderAvaliacoes();
+                        alert('Dados importados com sucesso!');
+                    } else {
+                        alert('Arquivo JSON com formato inválido.');
+                    }
+                } catch (err) {
+                    alert('Erro ao ler arquivo de backup.');
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        // ANOTAÇÕES EXPANSÍVEIS
+        function toggleNotas(id, tipo) {
+            const container = document.getElementById(`notes-${tipo}-${id}`);
+            if (container) {
+                container.style.display = container.style.display === 'block' ? 'none' : 'block';
+            }
+        }
+
+        function salvarNotas(id, tipo, texto) {
+            if (tipo === 't') {
+                trabalhos = trabalhos.map(item => item.id === id ? { ...item, notas: texto } : item);
+            } else {
+                avaliacoes = avaliacoes.map(item => item.id === id ? { ...item, notas: texto } : item);
+            }
+            salvarEDisparar();
         }
 
         // --- TRABALHOS ---
@@ -665,7 +888,8 @@
                 descricao: document.getElementById('t-descricao').value,
                 link: linkCorrigido,
                 prioridade: document.getElementById('t-prioridade').value,
-                status: 'Em andamento'
+                status: 'Em andamento',
+                notas: ''
             };
             trabalhos.push(novoTrabalho);
             salvarEDisparar();
@@ -703,9 +927,16 @@
                     </div>
                     <div class="item-desc">${item.descricao}</div>
                     ${item.link ? `<a href="${item.link}" target="_blank" class="btn-link"><i class="fa-solid fa-arrow-up-right-from-square"></i> Abrir Anexo / Projeto</a>` : ''}
+                    
+                    <div class="item-notes" id="notes-t-${item.id}">
+                        <strong>Anotações / Rascunhos:</strong>
+                        <textarea onblur="salvarNotas(${item.id}, 't', this.value)" placeholder="Digite tópicos ou anotações rápidas aqui...">${item.notas || ''}</textarea>
+                    </div>
+
                     <div class="item-meta">
                         <span>Status: <strong>${item.status}</strong></span>
                         <div class="item-actions">
+                            <button class="btn-action" onclick="toggleNotas(${item.id}, 't')"><i class="fa-solid fa-pen"></i> Notas</button>
                             <button class="btn-action" onclick="alternarStatusTrabalho(${item.id})"><i class="fa-solid fa-rotate"></i> Alternar Status</button>
                             <button class="btn-delete" onclick="deletarTrabalho(${item.id})"><i class="fa-solid fa-trash"></i></button>
                         </div>
@@ -745,7 +976,8 @@
                 materia: document.getElementById('a-materia').value,
                 data: document.getElementById('a-data').value,
                 prioridade: document.getElementById('a-prioridade').value,
-                status: 'Pendente'
+                status: 'Pendente',
+                notas: ''
             };
             avaliacoes.push(novaAvaliacao);
             salvarEDisparar();
@@ -807,9 +1039,16 @@
                         <span>Data: <strong>${dataFormatada}</strong></span>
                         ${item.status !== 'Concluído' ? `<span class="tag-countdown ${contagem.classe}"><i class="fa-regular fa-clock"></i> ${contagem.texto}</span>` : ''}
                     </div>
+
+                    <div class="item-notes" id="notes-a-${item.id}">
+                        <strong>Conteúdos para estudar:</strong>
+                        <textarea onblur="salvarNotas(${item.id}, 'a', this.value)" placeholder="Digite os tópicos cobrados na prova...">${item.notas || ''}</textarea>
+                    </div>
+
                     <div class="item-meta">
                         <span>Status: <strong>${item.status}</strong></span>
                         <div class="item-actions">
+                            <button class="btn-action" onclick="toggleNotas(${item.id}, 'a')"><i class="fa-solid fa-pen"></i> Notas</button>
                             <button class="btn-action" onclick="alternarStatusAvaliacao(${item.id})"><i class="fa-solid fa-check"></i> Alternar Status</button>
                             <button class="btn-delete" onclick="deletarAvaliacao(${item.id})"><i class="fa-solid fa-trash"></i></button>
                         </div>
@@ -844,7 +1083,8 @@
         });
 
         // INICIALIZAÇÃO
-        atualizarProgresso();
+        atualizarProgressoEStats();
+        verificarAlertasUrgentes();
         renderTrabalhos();
         renderAvaliacoes();
     </script>
