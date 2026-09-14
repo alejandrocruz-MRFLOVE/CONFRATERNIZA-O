@@ -3,1090 +3,625 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página Pessoal - 3º Trimestre</title>
-    <!-- FontAwesome para ícones modernos -->
+    <title>Galeria de Trabalhos & Atividades</title>
+    <!-- Font Awesome Icons & Google Fonts -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
     <style>
+        /* TEMA ESCURO (PADRÃO) */
         :root {
-            --bg-color: #0f172a;
-            --card-bg: #1e293b;
-            --card-border: #334155;
+            --bg-body: #0f172a;
+            --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+            --card-bg: rgba(30, 41, 59, 0.85);
+            --card-border: rgba(255, 255, 255, 0.1);
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
-            --accent-blue: #38bdf8;
-            --accent-green: #22c55e;
-            --accent-amber: #f59e0b;
-            --accent-purple: #c084fc;
-            --danger: #ef4444;
-            --input-bg: #0f172a;
-            --shadow: rgba(0, 0, 0, 0.3);
+            --accent: #6366f1;
+            --accent-hover: #4f46e5;
+            --accent-light: rgba(99, 102, 241, 0.2);
+            --danger: #f43f5e;
+            --input-bg: rgba(15, 23, 42, 0.8);
+            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
+            --radius-lg: 16px;
+            --radius-md: 10px;
         }
 
+        /* TEMA CLARO */
         [data-theme="light"] {
-            --bg-color: #f1f5f9;
+            --bg-body: #f1f5f9;
+            --bg-gradient: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
             --card-bg: #ffffff;
-            --card-border: #e2e8f0;
+            --card-border: rgba(0, 0, 0, 0.1);
             --text-main: #0f172a;
-            --text-muted: #64748b;
-            --accent-blue: #0284c7;
-            --accent-green: #16a34a;
-            --accent-amber: #d97706;
-            --accent-purple: #9333ea;
-            --danger: #dc2626;
+            --text-muted: #475569;
+            --accent: #4f46e5;
+            --accent-hover: #4338ca;
+            --accent-light: rgba(79, 70, 229, 0.12);
+            --danger: #e11d48;
             --input-bg: #f8fafc;
-            --shadow: rgba(0, 0, 0, 0.08);
+            --shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.08);
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; transition: background 0.2s, color 0.2s, border-color 0.2s; }
+        
+        body { 
+            background: var(--bg-body);
+            background-image: var(--bg-gradient); 
+            background-attachment: fixed;
+            color: var(--text-main); 
+            padding: 30px 15px; 
+            min-height: 100vh; 
         }
 
-        body {
-            background-color: var(--bg-color);
+        .container { max-width: 1100px; margin: 0 auto; display: flex; flex-direction: column; gap: 24px; }
+        
+        /* HEADER */
+        .header-wrapper { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            background: var(--card-bg); 
+            border: 1px solid var(--card-border); 
+            border-radius: var(--radius-lg); 
+            padding: 20px 24px; 
+            box-shadow: var(--shadow); 
+            flex-wrap: wrap; 
+            gap: 16px; 
+        }
+
+        .header-title h1 { 
+            font-size: 1.6rem; 
+            font-weight: 700;
             color: var(--text-main);
-            padding: 20px 15px;
-            min-height: 100vh;
+            display: flex; 
+            align-items: center; 
+            gap: 10px; 
         }
 
-        .header-wrapper {
-            max-width: 1100px;
-            margin: 0 auto 20px auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 16px;
-            padding: 20px 30px;
-            box-shadow: 0 10px 25px -5px var(--shadow);
-            flex-wrap: wrap;
-            gap: 15px;
+        .header-title p { color: var(--text-muted); font-size: 0.9rem; margin-top: 2px; }
+        .header-actions { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+        
+        /* BOTÕES */
+        button { cursor: pointer; border: none; font-weight: 600; display: inline-flex; align-items: center; gap: 8px; border-radius: var(--radius-md); }
+        
+        .btn-sec { 
+            background: var(--input-bg); 
+            border: 1px solid var(--card-border); 
+            color: var(--text-main); 
+            padding: 10px 16px; 
+            font-size: 0.85rem; 
+        }
+        .btn-sec:hover { border-color: var(--accent); color: var(--accent); }
+
+        .btn-adm { 
+            background: var(--accent); 
+            color: #fff; 
+            padding: 10px 18px; 
+            font-size: 0.85rem; 
+        }
+        .btn-adm:hover { background: var(--accent-hover); }
+        .btn-adm.logged { background: var(--danger); }
+
+        .btn-add { 
+            background: var(--accent); 
+            color: #fff; 
+            padding: 12px; 
+            justify-content: center; 
+            width: 100%; 
+            font-size: 0.95rem; 
         }
 
-        .header-title h1 {
-            font-size: 1.8rem;
-            color: var(--accent-blue);
-            display: flex;
-            align-items: center;
-            gap: 10px;
+        .btn-act { 
+            background: var(--accent-light); 
+            color: var(--accent); 
+            padding: 6px 12px; 
+            font-size: 0.8rem; 
         }
 
-        .header-title p {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            margin-top: 4px;
+        .btn-del { 
+            color: var(--danger); 
+            background: rgba(244, 63, 94, 0.1); 
+            padding: 6px 12px; 
+            font-size: 0.8rem; 
         }
 
-        .header-actions {
-            display: flex;
-            gap: 10px;
-            align-items: center;
+        /* PAINÉIS / CARDS */
+        .card { 
+            background: var(--card-bg); 
+            border: 1px solid var(--card-border); 
+            border-radius: var(--radius-lg); 
+            padding: 24px; 
+            box-shadow: var(--shadow); 
         }
 
-        .theme-toggle-btn, .btn-secondary {
-            background: var(--input-bg);
-            border: 1px solid var(--card-border);
-            color: var(--text-main);
-            padding: 10px 16px;
-            border-radius: 30px;
-            cursor: pointer;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.85rem;
-        }
-
-        .theme-toggle-btn:hover, .btn-secondary:hover {
-            border-color: var(--accent-blue);
-            color: var(--accent-blue);
-        }
-
-        .container {
-            max-width: 1100px;
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        /* BANNER DE ALERTA URGENTE */
-        .urgent-alert {
-            background-color: rgba(239, 68, 68, 0.15);
-            border: 1px solid var(--danger);
-            border-radius: 12px;
-            padding: 15px 20px;
-            color: var(--text-main);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            box-shadow: 0 4px 15px var(--shadow);
-        }
-
-        .urgent-alert i {
-            font-size: 1.5rem;
-            color: var(--danger);
-        }
-
-        /* STATS GRID */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-        }
-
-        .stat-card {
-            background-color: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 12px;
-            padding: 15px 20px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            box-shadow: 0 4px 15px var(--shadow);
-        }
-
-        .stat-icon {
-            font-size: 1.8rem;
-            width: 45px;
-            height: 45px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: var(--input-bg);
-        }
-
-        .stat-info h4 {
-            font-size: 1.2rem;
+        .card h2, .card h3 { 
+            font-size: 1.2rem; 
+            margin-bottom: 16px; 
+            display: flex; 
+            align-items: center; 
+            gap: 10px; 
             color: var(--text-main);
         }
 
-        .stat-info p {
-            font-size: 0.8rem;
-            color: var(--text-muted);
+        .adm-banner { 
+            background: var(--accent-light); 
+            border: 1px solid var(--accent); 
+            border-radius: var(--radius-md); 
+            padding: 12px 18px; 
+            color: var(--text-main); 
+            font-size: 0.9rem;
         }
 
-        /* BARRA DE PROGRESSO GERAL */
-        .progress-card {
-            background-color: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 12px;
-            padding: 20px;
-            box-shadow: 0 4px 15px var(--shadow);
+        /* FILTROS E FORMULÁRIO */
+        .filters-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+        .ai-hint { font-size: 0.8rem; color: var(--accent); margin-bottom: 8px; font-weight: 500; }
+
+        form { display: flex; flex-direction: column; gap: 12px; }
+        .form-row { display: flex; gap: 12px; flex-wrap: wrap; }
+        .form-row > * { flex: 1; min-width: 180px; }
+        
+        input, select, textarea { 
+            background: var(--input-bg); 
+            border: 1px solid var(--card-border); 
+            color: var(--text-main); 
+            padding: 10px 14px; 
+            border-radius: var(--radius-md); 
+            font-size: 0.9rem; 
+            outline: none; 
+        }
+        input:focus, select:focus, textarea:focus { border-color: var(--accent); }
+
+        /* LISTA E CARDS */
+        .item-list { 
+            list-style: none; 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); 
+            gap: 20px; 
         }
 
-        .progress-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-            font-weight: 600;
+        .item-card { 
+            background: var(--card-bg); 
+            border: 1px solid var(--card-border); 
+            border-radius: var(--radius-lg); 
+            padding: 20px; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 12px; 
+            position: relative;
+            box-shadow: var(--shadow);
         }
 
-        .progress-bar-bg {
-            background-color: var(--input-bg);
-            border: 1px solid var(--card-border);
-            height: 14px;
-            border-radius: 10px;
+        .item-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
+        .item-title { font-size: 1.05rem; font-weight: 700; color: var(--text-main); }
+
+        .badge { font-size: 0.7rem; padding: 4px 8px; border-radius: 12px; text-transform: uppercase; font-weight: 700; }
+        .badge-materia { background: var(--accent-light); color: var(--accent); }
+
+        .item-info { font-size: 0.82rem; color: var(--text-muted); display: flex; gap: 12px; flex-wrap: wrap; }
+        .item-desc { font-size: 0.88rem; color: var(--text-muted); line-height: 1.4; }
+
+        /* FIX DE SOBREPOSIÇÃO DE MÍDIAS */
+        .media-preview { display: flex; flex-direction: column; gap: 10px; margin-top: 6px; clear: both; }
+        
+        .media-img-container {
+            width: 100%;
+            height: 180px;
+            border-radius: var(--radius-md);
             overflow: hidden;
-        }
-
-        .progress-bar-fill {
-            background: linear-gradient(90deg, var(--accent-blue), var(--accent-green));
-            height: 100%;
-            width: 0%;
-            border-radius: 10px;
-            transition: width 0.5s ease-in-out;
-        }
-
-        /* FILTRO / BUSCA */
-        .search-card {
-            background-color: var(--card-bg);
             border: 1px solid var(--card-border);
-            border-radius: 12px;
-            padding: 15px 20px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            box-shadow: 0 4px 15px var(--shadow);
-        }
-
-        .search-card i {
-            color: var(--text-muted);
-            font-size: 1.1rem;
-        }
-
-        .search-card input {
-            width: 100%;
-            background: transparent;
-            border: none;
-            color: var(--text-main);
-            font-size: 1rem;
-            outline: none;
-        }
-
-        /* GRID PRINCIPAL */
-        .main-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 25px;
-        }
-
-        @media (min-width: 900px) {
-            .main-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-
-        .card {
-            background-color: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 12px;
-            padding: 25px;
-            box-shadow: 0 4px 15px var(--shadow);
-            display: flex;
-            flex-direction: column;
-        }
-
-        .card h2 {
-            font-size: 1.25rem;
-            color: var(--text-main);
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            border-bottom: 1px solid var(--card-border);
-            padding-bottom: 12px;
-        }
-
-        form {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            margin-bottom: 25px;
-        }
-
-        .form-row {
-            display: flex;
-            gap: 10px;
             position: relative;
-        }
-
-        .form-row > * {
-            flex: 1;
-        }
-
-        .ai-hint {
-            font-size: 0.75rem;
-            color: var(--accent-purple);
-            margin-top: -8px;
-            margin-bottom: 4px;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            font-weight: 500;
-        }
-
-        input, select, textarea {
-            background-color: var(--input-bg);
-            border: 1px solid var(--card-border);
-            color: var(--text-main);
-            padding: 12px;
-            border-radius: 8px;
-            font-size: 0.9rem;
-            outline: none;
-        }
-
-        input:focus, select:focus, textarea:focus {
-            border-color: var(--accent-blue);
-        }
-
-        button.btn-add {
-            background-color: var(--accent-blue);
-            color: #ffffff;
-            font-weight: 600;
-            padding: 12px;
-            border: none;
-            border-radius: 8px;
             cursor: pointer;
-            font-size: 0.95rem;
+            background: #000;
+        }
+
+        .media-img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .media-img-container:hover::after {
+            content: "🔍 Clique para Expandir";
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            color: white;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
-            box-shadow: 0 2px 8px var(--shadow);
-        }
-
-        button.btn-add:hover {
-            opacity: 0.9;
-            transform: translateY(-1px);
-        }
-
-        .item-list {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .item-card {
-            background-color: var(--input-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 10px;
-            padding: 16px;
-            position: relative;
-            animation: fadeIn 0.3s ease-in-out;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(8px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .item-card:hover {
-            border-color: var(--accent-blue);
-            transform: translateY(-2px);
-        }
-
-        .item-card.concluido {
-            opacity: 0.65;
-            border-left: 5px solid var(--accent-green);
-        }
-
-        .item-card.pendente {
-            border-left: 5px solid var(--accent-amber);
-        }
-
-        .item-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 8px;
-            gap: 10px;
-        }
-
-        .item-title {
-            font-weight: 600;
-            font-size: 1.05rem;
-            color: var(--text-main);
-        }
-
-        .badges-wrapper {
-            display: flex;
-            gap: 6px;
-            flex-wrap: wrap;
-        }
-
-        .badge {
-            font-size: 0.72rem;
-            padding: 3px 8px;
-            border-radius: 12px;
-            font-weight: 600;
-            text-transform: uppercase;
-        }
-
-        .badge-materia {
-            background-color: rgba(192, 132, 252, 0.15);
-            color: var(--accent-purple);
-            border: 1px solid rgba(192, 132, 252, 0.3);
-        }
-
-        .badge-alta {
-            background-color: rgba(239, 68, 68, 0.15);
-            color: var(--danger);
-            border: 1px solid rgba(239, 68, 68, 0.3);
-        }
-
-        .badge-media {
-            background-color: rgba(245, 158, 11, 0.15);
-            color: var(--accent-amber);
-            border: 1px solid rgba(245, 158, 11, 0.3);
-        }
-
-        .badge-baixa {
-            background-color: rgba(34, 197, 94, 0.15);
-            color: var(--accent-green);
-            border: 1px solid rgba(34, 197, 94, 0.3);
-        }
-
-        .item-desc {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            margin-bottom: 10px;
-            line-height: 1.4;
-        }
-
-        .item-notes {
-            display: none;
-            margin-top: 10px;
-            padding: 10px;
-            background: var(--card-bg);
-            border: 1px dashed var(--card-border);
-            border-radius: 6px;
             font-size: 0.85rem;
-        }
-
-        .item-notes textarea {
-            width: 100%;
-            margin-top: 5px;
-            resize: vertical;
-            min-height: 60px;
-        }
-
-        .item-meta {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: space-between;
-            gap: 10px;
-            font-size: 0.85rem;
-            padding-top: 10px;
-            border-top: 1px dashed var(--card-border);
-        }
-
-        .tag-countdown {
             font-weight: 600;
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-size: 0.8rem;
         }
 
-        .countdown-urgente {
-            background-color: rgba(239, 68, 68, 0.2);
-            color: var(--danger);
-        }
-
-        .countdown-ok {
-            background-color: rgba(56, 189, 248, 0.2);
-            color: var(--accent-blue);
-        }
-
-        .item-actions {
-            display: flex;
-            gap: 8px;
-            align-items: center;
-        }
-
-        .btn-action {
-            background: transparent;
-            border: 1px solid var(--card-border);
-            color: var(--text-muted);
-            padding: 5px 10px;
-            border-radius: 6px;
-            font-size: 0.8rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .btn-action:hover {
-            color: var(--text-main);
-            border-color: var(--accent-blue);
-        }
-
-        .btn-delete {
-            color: var(--danger);
-            border: none;
-            background: transparent;
-            cursor: pointer;
-            font-size: 0.9rem;
-            padding: 5px;
-        }
-
-        .btn-delete:hover {
-            opacity: 0.7;
-        }
-
-        .btn-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            color: var(--accent-blue);
-            text-decoration: none;
-            font-size: 0.85rem;
-            margin-bottom: 8px;
-            font-weight: 500;
-        }
-
-        .btn-link:hover {
-            text-decoration: underline;
-        }
-
-        .empty-state {
+        .video-box { 
+            border-radius: var(--radius-md); 
+            background: rgba(244, 63, 94, 0.1); 
+            padding: 12px; 
             text-align: center;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            padding: 25px;
-            border: 1px dashed var(--card-border);
-            border-radius: 8px;
+            border: 1px solid rgba(244, 63, 94, 0.2);
+            cursor: pointer;
+            color: var(--danger);
+            font-weight: 600;
+            font-size: 0.85rem;
         }
+        .video-box:hover { background: rgba(244, 63, 94, 0.2); }
+
+        .pdf-box {
+            border-radius: var(--radius-md);
+            border: 1px solid var(--card-border);
+            overflow: hidden;
+            height: 200px;
+            background: var(--input-bg);
+        }
+        .pdf-box iframe { width: 100%; height: 100%; border: none; }
+
+        /* MODAL FULLSCREEN */
+        .modal-fullscreen {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 99999;
+            background: rgba(0, 0, 0, 0.9);
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .modal-fullscreen img { max-width: 95vw; max-height: 90vh; border-radius: 8px; object-fit: contain; }
+        .modal-close { position: absolute; top: 15px; right: 20px; color: white; font-size: 2rem; cursor: pointer; }
+
+        .item-notes { display: none; padding: 8px; background: var(--input-bg); border: 1px dashed var(--card-border); border-radius: var(--radius-md); }
+        .item-notes textarea { width: 100%; min-height: 50px; border: none; background: transparent; }
+
+        .item-meta { display: flex; justify-content: space-between; align-items: center; padding-top: 10px; border-top: 1px solid var(--card-border); margin-top: auto; }
+        .empty-state { text-align: center; color: var(--text-muted); padding: 40px; border: 2px dashed var(--card-border); border-radius: var(--radius-lg); grid-column: 1 / -1; }
     </style>
 </head>
 <body>
-
-    <header class="header-wrapper">
-        <div class="header-title">
-            <h1><i class="fa-solid fa-graduation-cap"></i> Página Pessoal - 3º Trimestre</h1>
-            <p>Acompanhamento de Trabalhos Desenvolvidos e Avaliações</p>
-        </div>
-        <div class="header-actions">
-            <button class="btn-secondary" onclick="exportarBackup()"><i class="fa-solid fa-download"></i> Exportar</button>
-            <button class="btn-secondary" onclick="document.getElementById('import-file').click()"><i class="fa-solid fa-upload"></i> Importar</button>
-            <input type="file" id="import-file" style="display: none;" accept=".json" onchange="importarBackup(event)">
-            <button class="theme-toggle-btn" id="theme-toggle">
-                <i class="fa-solid fa-moon"></i> <span>Modo Escuro</span>
-            </button>
-        </div>
-    </header>
-
     <div class="container">
-        <!-- BANNER DE ALERTAS URGENTES -->
-        <div id="urgent-alert-box" class="urgent-alert" style="display: none;">
-            <i class="fa-solid fa-triangle-exclamation"></i>
-            <div>
-                <strong>Atenção! Avaliações Próximas:</strong>
-                <span id="urgent-alert-text">Você tem exames agendados para os próximos dias.</span>
+        <!-- HEADER PRINCIPAL -->
+        <header class="header-wrapper">
+            <div class="header-title">
+                <h1><i class="fa-solid fa-shapes"></i> Galeria de Trabalhos</h1>
+                <p>Acervo digital de projetos e atividades acadêmicas</p>
             </div>
+            <div class="header-actions">
+                <button class="btn-sec" onclick="exportarBackup()"><i class="fa-solid fa-download"></i> Exportar</button>
+                <button class="btn-sec adm-only" onclick="document.getElementById('import-file').click()" style="display:none;"><i class="fa-solid fa-upload"></i> Importar</button>
+                <input type="file" id="import-file" hidden accept=".json" onchange="importarBackup(event)">
+                <button class="btn-sec" id="theme-toggle" onclick="toggleTema()"><i class="fa-solid fa-moon"></i> <span id="theme-text">Escuro</span></button>
+                <button class="btn-adm" id="adm-toggle" onclick="toggleADM()"><i class="fa-solid fa-lock"></i> <span>Modo ADM</span></button>
+            </div>
+        </header>
+
+        <div id="adm-banner" class="adm-banner" style="display:none;">
+            <i class="fa-solid fa-shield-halved"></i> <strong>Modo Administrador Ativo:</strong> Você pode adicionar ou excluir itens.
         </div>
 
-        <!-- CARDS DE ESTATÍSTICAS -->
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-icon" style="color: var(--accent-amber);"><i class="fa-solid fa-clock"></i></div>
-                <div class="stat-info">
-                    <h4 id="stat-pendentes">0</h4>
-                    <p>Tarefas Pendentes</p>
+        <!-- FORMULÁRIO -->
+        <section class="card adm-only" style="display:none;">
+            <h2><i class="fa-solid fa-plus-circle"></i> Publicar Novo Trabalho</h2>
+            <form id="form-trabalho">
+                <div class="form-row">
+                    <input type="text" id="t-titulo" placeholder="Título do Projeto *" required>
+                    <input type="text" id="t-materia" list="list-materias" placeholder="Matéria / Disciplina *" required>
+                    <input type="text" id="t-professor" list="list-professores" placeholder="Professor *" required>
+                    <input type="date" id="t-data" required>
                 </div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-icon" style="color: var(--danger);"><i class="fa-solid fa-calendar-day"></i></div>
-                <div class="stat-info">
-                    <h4 id="stat-provas-semana">0</h4>
-                    <p>Provas nos Próx. 7 Dias</p>
-                </div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-icon" style="color: var(--accent-green);"><i class="fa-solid fa-circle-check"></i></div>
-                <div class="stat-info">
-                    <h4 id="stat-concluidos">0</h4>
-                    <p>Itens Concluídos</p>
-                </div>
-            </div>
-        </div>
 
-        <!-- BARRA DE PROGRESSO GERAL -->
-        <div class="progress-card">
-            <div class="progress-header">
-                <span><i class="fa-solid fa-chart-line"></i> Progresso do Trimestre</span>
-                <span id="progress-text">0% Concluído</span>
-            </div>
-            <div class="progress-bar-bg">
-                <div class="progress-bar-fill" id="progress-fill"></div>
-            </div>
-        </div>
+                <datalist id="list-materias"></datalist>
+                <datalist id="list-professores"></datalist>
 
-        <!-- BARRA DE PESQUISA / FILTRO -->
-        <div class="search-card">
-            <i class="fa-solid fa-magnifying-glass"></i>
-            <input type="text" id="search-input" placeholder="Pesquisar por título ou matéria...">
-        </div>
-
-        <div class="main-grid">
-            <!-- SEÇÃO: TRABALHOS DESENVOLVIDOS -->
-            <section class="card">
-                <h2><i class="fa-solid fa-folder-open"></i> Trabalhos Desenvolvidos</h2>
+                <div id="ai-hint-t" class="ai-hint" style="display:none;"><i class="fa-solid fa-wand-magic-sparkles"></i> <span id="ai-hint-text-t"></span></div>
+                <textarea id="t-descricao" placeholder="Descrição do trabalho..." rows="3" required></textarea>
                 
-                <form id="form-trabalho">
-                    <div class="form-row">
-                        <input type="text" id="t-titulo" placeholder="Título do trabalho" required>
-                        <input type="text" id="t-materia" placeholder="Matéria" required>
-                    </div>
-                    <div id="ai-hint-t" class="ai-hint" style="display: none;">
-                        <i class="fa-solid fa-wand-magic-sparkles"></i> <span id="ai-hint-text-t"></span>
-                    </div>
-                    <textarea id="t-descricao" placeholder="Descrição rápida do projeto..." rows="2" required></textarea>
-                    <div class="form-row">
-                        <input type="text" id="t-link" placeholder="Link (GitHub / Drive / Canva)">
-                        <select id="t-prioridade">
-                            <option value="Baixa">Prioridade: Baixa</option>
-                            <option value="Média" selected>Prioridade: Média</option>
-                            <option value="Alta">Prioridade: Alta</option>
-                        </select>
-                    </div>
-                    <button type="submit" class="btn-add"><i class="fa-solid fa-plus"></i> Registrar Trabalho</button>
-                </form>
+                <div class="form-row">
+                    <input type="url" id="t-imagem" placeholder="Link/URL da Foto (Google Drive / Direct Link)">
+                    <input type="url" id="t-video" placeholder="Link/URL do Vídeo (YouTube / Vimeo)">
+                    <input type="url" id="t-pdf" placeholder="Link/URL do PDF">
+                </div>
+                <button type="submit" class="btn-add"><i class="fa-solid fa-paper-plane"></i> Publicar Trabalho</button>
+            </form>
+        </section>
 
-                <ul id="lista-trabalhos" class="item-list"></ul>
-            </section>
-
-            <!-- SEÇÃO: REGISTRO DE AVALIAÇÕES -->
-            <section class="card">
-                <h2><i class="fa-solid fa-calendar-days"></i> Datas de Avaliações</h2>
-
-                <form id="form-avaliacao">
-                    <div class="form-row">
-                        <input type="text" id="a-titulo" placeholder="Assunto/Conteúdo da Prova" required>
-                        <input type="text" id="a-materia" placeholder="Matéria" required>
-                    </div>
-                    <div id="ai-hint-a" class="ai-hint" style="display: none;">
-                        <i class="fa-solid fa-wand-magic-sparkles"></i> <span id="ai-hint-text-a"></span>
-                    </div>
-                    <div class="form-row">
-                        <input type="date" id="a-data" required>
-                        <select id="a-prioridade">
-                            <option value="Baixa">Prioridade: Baixa</option>
-                            <option value="Média" selected>Prioridade: Média</option>
-                            <option value="Alta">Prioridade: Alta</option>
-                        </select>
-                    </div>
-                    <button type="submit" class="btn-add"><i class="fa-solid fa-plus"></i> Agendar Avaliação</button>
-                </form>
-
-                <ul id="lista-avaliacoes" class="item-list"></ul>
-            </section>
+        <!-- FILTROS -->
+        <div class="card">
+            <h3><i class="fa-solid fa-filter"></i> Filtrar Conteúdo</h3>
+            <div class="filters-grid">
+                <input type="text" id="search-input" placeholder="Pesquisar...">
+                <input type="date" id="filter-data" onchange="renderTrabalhos()">
+                <select id="filter-materia" onchange="renderTrabalhos()"><option value="">Todas as Matérias</option></select>
+                <select id="filter-professor" onchange="renderTrabalhos()"><option value="">Todos os Professores</option></select>
+            </div>
         </div>
+
+        <!-- GALERIA -->
+        <section class="card">
+            <h2><i class="fa-solid fa-folder-open"></i> Atividades Cadastradas</h2>
+            <ul id="lista-trabalhos" class="item-list"></ul>
+        </section>
+    </div>
+
+    <!-- MODAL IMAGEM FULLSCREEN -->
+    <div id="image-modal" class="modal-fullscreen" onclick="fecharModalImagem()">
+        <span class="modal-close">&times;</span>
+        <img id="modal-img-src" src="" alt="Imagem Ampliada">
     </div>
 
     <script>
-        // Mapeamento de Palavras-Chave para IA
         const dicionarioIA = [
-            { palavras: ['python', 'c++', 'codigo', 'orientada', 'poo', 'algoritmo', 'sistema', 'site', 'html', 'css', 'javascript', 'backend', 'frontend'], materia: 'Programação' },
-            { palavras: ['robo', 'robotica', 'arduino', 'sensor', 'circuito', 'motor', 'automaçao'], materia: 'Robótica' },
-            { palavras: ['pas', 'matematica', 'calculo', 'equaçao', 'geometria', 'algebra', 'funçao'], materia: 'Matemática' },
-            { palavras: ['redaçao', 'texto', 'portugues', 'gramatica', 'literatura', 'livro', 'poema'], materia: 'Português' },
-            { palavras: ['fisica', 'movimento', 'força', 'velocidade', 'energia', 'mecanica'], materia: 'Física' },
-            { palavras: ['quimica', 'tabela', 'atomo', 'reaçao', 'massa'], materia: 'Química' },
-            { palavras: ['historia', 'brasil', 'guerra', 'seculo', 'revoluçao'], materia: 'História' },
-            { palavras: ['geografia', 'mapa', 'relevo', 'clima', 'populaçao'], materia: 'Geografia' },
-            { palavras: ['ingles', 'english', 'verb', 'reading'], materia: 'Inglês' },
-            { palavras: ['contabilidade', 'financeiro', 'planilha', 'excel', 'administraçao', 'balanço'], materia: 'Contabilidade' }
+            { p: ['python', 'c++', 'codigo', 'algoritmo', 'site', 'html'], m: 'Programação' },
+            { p: ['robo', 'robotica', 'arduino', 'sensor'], m: 'Robótica' },
+            { p: ['matematica', 'calculo', 'equaçao'], m: 'Matemática' },
+            { p: ['redaçao', 'texto', 'portugues'], m: 'Português' },
+            { p: ['fisica', 'movimento', 'força'], m: 'Física' }
         ];
 
-        // Função da IA para prever a matéria
-        function adivinharMateria(textoInput) {
-            const textoNormalizado = textoInput.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-            for (let item of dicionarioIA) {
-                if (item.palavras.some(palavra => textoNormalizado.includes(palavra))) {
-                    return item.materia;
-                }
-            }
-            return null;
-        }
+        let trabalhos = JSON.parse(localStorage.getItem('trabalhos_repo_v5')) || [];
+        let isADM = false;
 
-        function arrumarLink(url) {
-            if (!url) return '';
-            let limpo = url.trim();
-            if (!limpo.startsWith('http://') && !limpo.startsWith('https://')) {
-                limpo = 'https://' + limpo;
-            }
-            return limpo;
-        }
-
-        // Detectar ao digitar nos inputs de título
-        document.getElementById('t-titulo').addEventListener('input', (e) => {
-            const materiaInput = document.getElementById('t-materia');
-            const hintBox = document.getElementById('ai-hint-t');
-            const hintText = document.getElementById('ai-hint-text-t');
-            
-            const sugerido = adivinharMateria(e.target.value);
-            if (sugerido && !materiaInput.value) {
-                materiaInput.value = sugerido;
-                hintText.innerText = `IA identificou a matéria: ${sugerido}`;
-                hintBox.style.display = 'flex';
-            } else if (!sugerido) {
-                hintBox.style.display = 'none';
-            }
-        });
-
-        document.getElementById('a-titulo').addEventListener('input', (e) => {
-            const materiaInput = document.getElementById('a-materia');
-            const hintBox = document.getElementById('ai-hint-a');
-            const hintText = document.getElementById('ai-hint-text-a');
-            
-            const sugerido = adivinharMateria(e.target.value);
-            if (sugerido && !materiaInput.value) {
-                materiaInput.value = sugerido;
-                hintText.innerText = `IA identificou a matéria: ${sugerido}`;
-                hintBox.style.display = 'flex';
-            } else if (!sugerido) {
-                hintBox.style.display = 'none';
-            }
-        });
-
-        // ESTADO DE DADOS
-        let trabalhos = JSON.parse(localStorage.getItem('trabalhos_3trim')) || [];
-        let avaliacoes = JSON.parse(localStorage.getItem('avaliacoes_3trim')) || [];
-        let termoBusca = '';
-
-        // TEMA (LIGHT/DARK)
-        const themeBtn = document.getElementById('theme-toggle');
-        const temaSalvo = localStorage.getItem('theme_3trim') || 'dark';
-
-        function aplicarTema(tema) {
+        // --- CORREÇÃO 1: MODO CLARO / ESCURO ---
+        function setTema(tema) {
             if (tema === 'light') {
                 document.documentElement.setAttribute('data-theme', 'light');
-                themeBtn.innerHTML = '<i class="fa-solid fa-sun"></i> <span>Modo Claro</span>';
+                document.getElementById('theme-toggle').innerHTML = '<i class="fa-solid fa-sun"></i> <span>Claro</span>';
             } else {
                 document.documentElement.removeAttribute('data-theme');
-                themeBtn.innerHTML = '<i class="fa-solid fa-moon"></i> <span>Modo Escuro</span>';
+                document.getElementById('theme-toggle').innerHTML = '<i class="fa-solid fa-moon"></i> <span>Escuro</span>';
             }
-            localStorage.setItem('theme_3trim', tema);
+            localStorage.setItem('theme_repo_v5', tema);
         }
 
-        themeBtn.addEventListener('click', () => {
-            const temaAtual = document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
-            aplicarTema(temaAtual === 'dark' ? 'light' : 'dark');
-        });
-
-        aplicarTema(temaSalvo);
-
-        // SALVAR NO LOCALSTORAGE E ATUALIZAR INTERFACE
-        function salvarEDisparar() {
-            localStorage.setItem('trabalhos_3trim', JSON.stringify(trabalhos));
-            localStorage.setItem('avaliacoes_3trim', JSON.stringify(avaliacoes));
-            atualizarProgressoEStats();
-            verificarAlertasUrgentes();
+        function toggleTema() {
+            const atual = localStorage.getItem('theme_repo_v5') === 'light' ? 'dark' : 'light';
+            setTema(atual);
         }
 
-        function atualizarProgressoEStats() {
-            const total = trabalhos.length + avaliacoes.length;
-            const concluidosTrabalhos = trabalhos.filter(t => t.status === 'Concluído').length;
-            const concluidosAvaliacoes = avaliacoes.filter(a => a.status === 'Concluído').length;
-            const totalConcluidos = concluidosTrabalhos + concluidosAvaliacoes;
-
-            // Progresso Porcentagem
-            if (total === 0) {
-                document.getElementById('progress-text').innerText = '0% Concluído';
-                document.getElementById('progress-fill').style.width = '0%';
-            } else {
-                const porcentagem = Math.round((totalConcluidos / total) * 100);
-                document.getElementById('progress-text').innerText = `${porcentagem}% Concluído`;
-                document.getElementById('progress-fill').style.width = `${porcentagem}%`;
+        // --- CORREÇÃO 2: LINK DE FOTOS (GOOGLE DRIVE & DIRECT LINKS) ---
+        function converterLinkImagem(url) {
+            if (!url) return '';
+            // Converte links de visualização do Google Drive para links diretos de imagem
+            if (url.includes('drive.google.com') && url.includes('/file/d/')) {
+                const id = url.split('/file/d/')[1].split('/')[0].split('?')[0];
+                return `https://lh3.googleusercontent.com/d/${id}`;
             }
-
-            // Stats Cards
-            document.getElementById('stat-pendentes').innerText = total - totalConcluidos;
-            document.getElementById('stat-concluidos').innerText = totalConcluidos;
-
-            // Provas na semana
-            const hoje = new Date();
-            hoje.setHours(0, 0, 0, 0);
-            const em7Dias = new Date(hoje);
-            em7Dias.setDate(hoje.getDate() + 7);
-
-            const provasSemana = avaliacoes.filter(a => {
-                if (a.status === 'Concluído') return false;
-                const partes = a.data.split('-');
-                const d = new Date(partes[0], partes[1] - 1, partes[2]);
-                return d >= hoje && d <= em7Dias;
-            }).length;
-
-            document.getElementById('stat-provas-semana').innerText = provasSemana;
-        }
-
-        function verificarAlertasUrgentes() {
-            const hoje = new Date();
-            hoje.setHours(0, 0, 0, 0);
-
-            const urgentes = avaliacoes.filter(a => {
-                if (a.status === 'Concluído') return false;
-                const partes = a.data.split('-');
-                const d = new Date(partes[0], partes[1] - 1, partes[2]);
-                const diffDias = Math.ceil((d - hoje) / (1000 * 60 * 60 * 24));
-                return diffDias >= 0 && diffDias <= 3;
-            });
-
-            const alertBox = document.getElementById('urgent-alert-box');
-            const alertText = document.getElementById('urgent-alert-text');
-
-            if (urgentes.length > 0) {
-                const listaNomes = urgentes.map(u => `${u.materia} (${u.titulo})`).join(', ');
-                alertText.innerText = `Próximas avaliações em menos de 3 dias: ${listaNomes}`;
-                alertBox.style.display = 'flex';
-            } else {
-                alertBox.style.display = 'none';
+            // Dropbox Direct Fix
+            if (url.includes('dropbox.com')) {
+                return url.replace('www.dropbox.com', 'dl.dropboxusercontent.com').replace('?dl=0', '');
             }
+            return url;
         }
 
-        // BACKUP E RESTAURAÇÃO
+        // --- CORREÇÃO 3: EXPORTAR BACKUP ---
         function exportarBackup() {
-            const dados = {
-                trabalhos,
-                avaliacoes,
-                dataBackup: new Date().toISOString()
-            };
-            const blob = new Blob([JSON.stringify(dados, null, 2)], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `backup_estudos_3trim_${new Date().toISOString().slice(0, 10)}.json`;
-            a.click();
+            if (trabalhos.length === 0) {
+                alert("Não há trabalhos para exportar!");
+                return;
+            }
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(trabalhos, null, 2));
+            const downloadAnchor = document.createElement('a');
+            downloadAnchor.setAttribute("href", dataStr);
+            downloadAnchor.setAttribute("download", `backup_trabalhos_${new Date().toISOString().slice(0, 10)}.json`);
+            document.body.appendChild(downloadAnchor);
+            downloadAnchor.click();
+            downloadAnchor.remove();
         }
 
-        function importarBackup(event) {
-            const file = event.target.files[0];
+        function importarBackup(e) {
+            const file = e.target.files[0];
             if (!file) return;
-
             const reader = new FileReader();
-            reader.onload = function(e) {
+            reader.onload = (evt) => {
                 try {
-                    const dados = JSON.parse(e.target.result);
-                    if (dados.trabalhos && dados.avaliacoes) {
-                        trabalhos = dados.trabalhos;
-                        avaliacoes = dados.avaliacoes;
-                        salvarEDisparar();
-                        renderTrabalhos();
-                        renderAvaliacoes();
-                        alert('Dados importados com sucesso!');
-                    } else {
-                        alert('Arquivo JSON com formato inválido.');
-                    }
-                } catch (err) {
-                    alert('Erro ao ler arquivo de backup.');
-                }
+                    trabalhos = JSON.parse(evt.target.result);
+                    salvar(); 
+                    renderTrabalhos(); 
+                    alert('Dados importados com sucesso!');
+                } catch (err) { alert('Erro ao ler arquivo JSON!'); }
             };
             reader.readAsText(file);
         }
 
-        // ANOTAÇÕES EXPANSÍVEIS
-        function toggleNotas(id, tipo) {
-            const container = document.getElementById(`notes-${tipo}-${id}`);
-            if (container) {
-                container.style.display = container.style.display === 'block' ? 'none' : 'block';
-            }
-        }
-
-        function salvarNotas(id, tipo, texto) {
-            if (tipo === 't') {
-                trabalhos = trabalhos.map(item => item.id === id ? { ...item, notas: texto } : item);
+        // ADM & CONTROLES
+        function toggleADM() {
+            if (!isADM) {
+                const senha = prompt("Insira a senha ADM:");
+                if (senha === "admin123") isADM = true;
+                else if (senha !== null) alert("Senha incorreta!");
             } else {
-                avaliacoes = avaliacoes.map(item => item.id === id ? { ...item, notas: texto } : item);
+                isADM = false;
             }
-            salvarEDisparar();
+            atualizarVisibilidadeADM();
         }
 
-        // --- TRABALHOS ---
-        const formTrabalho = document.getElementById('form-trabalho');
-        const listaTrabalhos = document.getElementById('lista-trabalhos');
+        function atualizarVisibilidadeADM() {
+            const btn = document.getElementById('adm-toggle');
+            const admElements = document.querySelectorAll('.adm-only');
+            const banner = document.getElementById('adm-banner');
 
-        formTrabalho.addEventListener('submit', (e) => {
+            if (isADM) {
+                btn.innerHTML = '<i class="fa-solid fa-unlock"></i> <span>Sair ADM</span>';
+                btn.classList.add('logged');
+                admElements.forEach(el => el.style.display = 'block');
+                banner.style.display = 'block';
+            } else {
+                btn.innerHTML = '<i class="fa-solid fa-lock"></i> <span>Modo ADM</span>';
+                btn.classList.remove('logged');
+                admElements.forEach(el => el.style.display = 'none');
+                banner.style.display = 'none';
+            }
+            renderTrabalhos();
+        }
+
+        // AUTOCOMPLETE DE IA
+        document.getElementById('t-titulo').addEventListener('input', (e) => {
+            const matInput = document.getElementById('t-materia');
+            const hintBox = document.getElementById('ai-hint-t');
+            const txt = e.target.value.toLowerCase();
+            const match = dicionarioIA.find(item => item.p.some(p => txt.includes(p)));
+            if (match && !matInput.value) {
+                matInput.value = match.m;
+                document.getElementById('ai-hint-text-t').innerText = `Sugestão de Matéria: ${match.m}`;
+                hintBox.style.display = 'block';
+            } else if (!match) hintBox.style.display = 'none';
+        });
+
+        function salvar() {
+            localStorage.setItem('trabalhos_repo_v5', JSON.stringify(trabalhos));
+            atualizarOpcoesFiltro();
+        }
+
+        function atualizarOpcoesFiltro() {
+            const matSelect = document.getElementById('filter-materia');
+            const profSelect = document.getElementById('filter-professor');
+            const listMat = document.getElementById('list-materias');
+            const listProf = document.getElementById('list-professores');
+
+            const materias = [...new Set(trabalhos.map(t => t.materia))].filter(Boolean);
+            const professores = [...new Set(trabalhos.map(t => t.professor))].filter(Boolean);
+
+            matSelect.innerHTML = '<option value="">Todas as Matérias</option>' + materias.map(m => `<option value="${m}">${m}</option>`).join('');
+            profSelect.innerHTML = '<option value="">Todos os Professores</option>' + professores.map(p => `<option value="${p}">${p}</option>`).join('');
+
+            listMat.innerHTML = materias.map(m => `<option value="${m}">`).join('');
+            listProf.innerHTML = professores.map(p => `<option value="${p}">`).join('');
+        }
+
+        // CADASTRO DE ITEM
+        document.getElementById('form-trabalho').addEventListener('submit', (e) => {
             e.preventDefault();
-            
-            const rawLink = document.getElementById('t-link').value;
-            const linkCorrigido = arrumarLink(rawLink);
+            if (!isADM) return;
 
-            const novoTrabalho = {
+            trabalhos.push({
                 id: Date.now(),
                 titulo: document.getElementById('t-titulo').value,
                 materia: document.getElementById('t-materia').value,
+                professor: document.getElementById('t-professor').value,
+                data: document.getElementById('t-data').value,
                 descricao: document.getElementById('t-descricao').value,
-                link: linkCorrigido,
-                prioridade: document.getElementById('t-prioridade').value,
-                status: 'Em andamento',
+                imagem: document.getElementById('t-imagem').value,
+                video: document.getElementById('t-video').value,
+                pdf: document.getElementById('t-pdf').value,
                 notas: ''
-            };
-            trabalhos.push(novoTrabalho);
-            salvarEDisparar();
+            });
+
+            salvar();
             renderTrabalhos();
-            formTrabalho.reset();
+            e.target.reset();
             document.getElementById('ai-hint-t').style.display = 'none';
         });
 
+        function deletar(id) {
+            if (!isADM) return;
+            if (confirm("Remover trabalho?")) {
+                trabalhos = trabalhos.filter(i => i.id !== id);
+                salvar();
+                renderTrabalhos();
+            }
+        }
+
+        function abrirModalImagem(src) {
+            document.getElementById('modal-img-src').src = src;
+            document.getElementById('image-modal').style.display = 'flex';
+        }
+
+        function fecharModalImagem() {
+            document.getElementById('image-modal').style.display = 'none';
+        }
+
+        function toggleNotas(id) {
+            const el = document.getElementById(`notes-${id}`);
+            el.style.display = el.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function salvarNotas(id, val) {
+            if (!isADM) return;
+            const item = trabalhos.find(i => i.id === id);
+            if (item) item.notas = val;
+            salvar();
+        }
+
+        // RENDERIZAR TELA
         function renderTrabalhos() {
-            listaTrabalhos.innerHTML = '';
-            
-            const filtrados = trabalhos.filter(t => 
-                t.titulo.toLowerCase().includes(termoBusca) || 
-                t.materia.toLowerCase().includes(termoBusca)
-            );
+            const list = document.getElementById('lista-trabalhos');
+            const txt = document.getElementById('search-input').value.toLowerCase();
+            const filterData = document.getElementById('filter-data').value;
+            const filterMat = document.getElementById('filter-materia').value;
+            const filterProf = document.getElementById('filter-professor').value;
 
-            if (filtrados.length === 0) {
-                listaTrabalhos.innerHTML = '<div class="empty-state">Nenhum trabalho encontrado.</div>';
+            const filtrados = trabalhos.filter(t => {
+                const matchTxt = t.titulo.toLowerCase().includes(txt) || t.descricao.toLowerCase().includes(txt);
+                const matchData = !filterData || t.data === filterData;
+                const matchMat = !filterMat || t.materia === filterMat;
+                const matchProf = !filterProf || t.professor === filterProf;
+                return matchTxt && matchData && matchMat && matchProf;
+            });
+
+            if (!filtrados.length) {
+                list.innerHTML = '<div class="empty-state"><i class="fa-regular fa-folder-open fa-2x"></i><br><br>Nenhum trabalho cadastrado ou encontrado.</div>';
                 return;
             }
 
-            filtrados.forEach((item) => {
-                const li = document.createElement('li');
-                li.className = `item-card ${item.status === 'Concluído' ? 'concluido' : 'pendente'}`;
-                
-                const classePrioridade = item.prioridade === 'Alta' ? 'badge-alta' : item.prioridade === 'Média' ? 'badge-media' : 'badge-baixa';
+            list.innerHTML = filtrados.map(item => {
+                const imgTratada = converterLinkImagem(item.imagem);
+                const pData = item.data ? item.data.split('-') : [];
+                const dataFmt = pData.length === 3 ? `${pData[2]}/${pData[1]}/${pData[0]}` : 'Data N/I';
 
-                li.innerHTML = `
+                return `
+                <li class="item-card">
                     <div class="item-header">
-                        <span class="item-title">${item.titulo}</span>
-                        <div class="badges-wrapper">
-                            <span class="badge badge-materia">${item.materia}</span>
-                            <span class="badge ${classePrioridade}">${item.prioridade}</span>
-                        </div>
+                        <div class="item-title">${item.titulo}</div>
+                        <span class="badge badge-materia">${item.materia}</span>
                     </div>
-                    <div class="item-desc">${item.descricao}</div>
-                    ${item.link ? `<a href="${item.link}" target="_blank" class="btn-link"><i class="fa-solid fa-arrow-up-right-from-square"></i> Abrir Anexo / Projeto</a>` : ''}
                     
-                    <div class="item-notes" id="notes-t-${item.id}">
-                        <strong>Anotações / Rascunhos:</strong>
-                        <textarea onblur="salvarNotas(${item.id}, 't', this.value)" placeholder="Digite tópicos ou anotações rápidas aqui...">${item.notas || ''}</textarea>
+                    <div class="item-info">
+                        <span><i class="fa-solid fa-user"></i> ${item.professor}</span>
+                        <span><i class="fa-solid fa-calendar"></i> ${dataFmt}</span>
+                    </div>
+
+                    <div class="item-desc">${item.descricao}</div>
+
+                    <div class="media-preview">
+                        ${imgTratada ? `
+                            <div class="media-img-container" onclick="abrirModalImagem('${imgTratada}')">
+                                <img src="${imgTratada}" alt="Imagem do Projeto" onerror="this.parentElement.style.display='none'">
+                            </div>
+                        ` : ''}
+
+                        ${item.video ? `
+                            <div class="video-box" onclick="window.open('${item.video}', '_blank')">
+                                <i class="fa-brands fa-youtube"></i> Abrir Vídeo
+                            </div>
+                        ` : ''}
+
+                        ${item.pdf ? `
+                            <div class="pdf-box">
+                                <iframe src="${item.pdf}"></iframe>
+                            </div>
+                        ` : ''}
+                    </div>
+
+                    <div class="item-notes" id="notes-${item.id}">
+                        <textarea ${!isADM ? 'disabled' : ''} onblur="salvarNotas(${item.id}, this.value)" placeholder="Anotações internas...">${item.notas || ''}</textarea>
                     </div>
 
                     <div class="item-meta">
-                        <span>Status: <strong>${item.status}</strong></span>
-                        <div class="item-actions">
-                            <button class="btn-action" onclick="toggleNotas(${item.id}, 't')"><i class="fa-solid fa-pen"></i> Notas</button>
-                            <button class="btn-action" onclick="alternarStatusTrabalho(${item.id})"><i class="fa-solid fa-rotate"></i> Alternar Status</button>
-                            <button class="btn-delete" onclick="deletarTrabalho(${item.id})"><i class="fa-solid fa-trash"></i></button>
-                        </div>
+                        <button class="btn-act" onclick="toggleNotas(${item.id})"><i class="fa-regular fa-sticky-note"></i> Notas</button>
+                        ${isADM ? `<button class="btn-del" onclick="deletar(${item.id})"><i class="fa-regular fa-trash-can"></i> Excluir</button>` : ''}
                     </div>
+                </li>
                 `;
-                listaTrabalhos.appendChild(li);
-            });
+            }).join('');
         }
 
-        function alternarStatusTrabalho(id) {
-            trabalhos = trabalhos.map(t => {
-                if (t.id === id) {
-                    const proximos = { 'Pendente': 'Em andamento', 'Em andamento': 'Concluído', 'Concluído': 'Pendente' };
-                    t.status = proximos[t.status] || 'Pendente';
-                }
-                return t;
-            });
-            salvarEDisparar();
-            renderTrabalhos();
-        }
-
-        function deletarTrabalho(id) {
-            trabalhos = trabalhos.filter(t => t.id !== id);
-            salvarEDisparar();
-            renderTrabalhos();
-        }
-
-        // --- AVALIAÇÕES ---
-        const formAvaliacao = document.getElementById('form-avaliacao');
-        const listaAvaliacoes = document.getElementById('lista-avaliacoes');
-
-        formAvaliacao.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const novaAvaliacao = {
-                id: Date.now(),
-                titulo: document.getElementById('a-titulo').value,
-                materia: document.getElementById('a-materia').value,
-                data: document.getElementById('a-data').value,
-                prioridade: document.getElementById('a-prioridade').value,
-                status: 'Pendente',
-                notas: ''
-            };
-            avaliacoes.push(novaAvaliacao);
-            salvarEDisparar();
-            renderAvaliacoes();
-            formAvaliacao.reset();
-            document.getElementById('ai-hint-a').style.display = 'none';
-        });
-
-        function calcularContagem(dataString) {
-            const hoje = new Date();
-            hoje.setHours(0, 0, 0, 0);
-            
-            const partes = dataString.split('-');
-            const dataProva = new Date(partes[0], partes[1] - 1, partes[2]);
-
-            const diffTempo = dataProva - hoje;
-            const diffDias = Math.ceil(diffTempo / (1000 * 60 * 60 * 24));
-
-            if (diffDias < 0) return { texto: 'Já realizada', classe: 'countdown-urgente' };
-            if (diffDias === 0) return { texto: 'É hoje!', classe: 'countdown-urgente' };
-            if (diffDias === 1) return { texto: 'Amanhã!', classe: 'countdown-urgente' };
-            if (diffDias <= 3) return { texto: `Faltam ${diffDias} dias`, classe: 'countdown-urgente' };
-            return { texto: `Faltam ${diffDias} dias`, classe: 'countdown-ok' };
-        }
-
-        function renderAvaliacoes() {
-            listaAvaliacoes.innerHTML = '';
-
-            const filtrados = avaliacoes.filter(a => 
-                a.titulo.toLowerCase().includes(termoBusca) || 
-                a.materia.toLowerCase().includes(termoBusca)
-            );
-
-            if (filtrados.length === 0) {
-                listaAvaliacoes.innerHTML = '<div class="empty-state">Nenhuma avaliação encontrada.</div>';
-                return;
-            }
-
-            filtrados.sort((a, b) => new Date(a.data) - new Date(b.data));
-
-            filtrados.forEach((item) => {
-                const li = document.createElement('li');
-                li.className = `item-card ${item.status === 'Concluído' ? 'concluido' : 'pendente'}`;
-
-                const partes = item.data.split('-');
-                const dataFormatada = `${partes[2]}/${partes[1]}/${partes[0]}`;
-                const contagem = calcularContagem(item.data);
-                const classePrioridade = item.prioridade === 'Alta' ? 'badge-alta' : item.prioridade === 'Média' ? 'badge-media' : 'badge-baixa';
-
-                li.innerHTML = `
-                    <div class="item-header">
-                        <span class="item-title">${item.titulo}</span>
-                        <div class="badges-wrapper">
-                            <span class="badge badge-materia">${item.materia}</span>
-                            <span class="badge ${classePrioridade}">${item.prioridade}</span>
-                        </div>
-                    </div>
-                    <div class="item-meta" style="border-top: none; padding-top: 0;">
-                        <span>Data: <strong>${dataFormatada}</strong></span>
-                        ${item.status !== 'Concluído' ? `<span class="tag-countdown ${contagem.classe}"><i class="fa-regular fa-clock"></i> ${contagem.texto}</span>` : ''}
-                    </div>
-
-                    <div class="item-notes" id="notes-a-${item.id}">
-                        <strong>Conteúdos para estudar:</strong>
-                        <textarea onblur="salvarNotas(${item.id}, 'a', this.value)" placeholder="Digite os tópicos cobrados na prova...">${item.notas || ''}</textarea>
-                    </div>
-
-                    <div class="item-meta">
-                        <span>Status: <strong>${item.status}</strong></span>
-                        <div class="item-actions">
-                            <button class="btn-action" onclick="toggleNotas(${item.id}, 'a')"><i class="fa-solid fa-pen"></i> Notas</button>
-                            <button class="btn-action" onclick="alternarStatusAvaliacao(${item.id})"><i class="fa-solid fa-check"></i> Alternar Status</button>
-                            <button class="btn-delete" onclick="deletarAvaliacao(${item.id})"><i class="fa-solid fa-trash"></i></button>
-                        </div>
-                    </div>
-                `;
-                listaAvaliacoes.appendChild(li);
-            });
-        }
-
-        function alternarStatusAvaliacao(id) {
-            avaliacoes = avaliacoes.map(a => {
-                if (a.id === id) {
-                    a.status = a.status === 'Pendente' ? 'Concluído' : 'Pendente';
-                }
-                return a;
-            });
-            salvarEDisparar();
-            renderAvaliacoes();
-        }
-
-        function deletarAvaliacao(id) {
-            avaliacoes = avaliacoes.filter(a => a.id !== id);
-            salvarEDisparar();
-            renderAvaliacoes();
-        }
-
-        // PESQUISA EM TEMPO REAL
-        document.getElementById('search-input').addEventListener('input', (e) => {
-            termoBusca = e.target.value.toLowerCase();
-            renderTrabalhos();
-            renderAvaliacoes();
-        });
+        document.getElementById('search-input').addEventListener('input', renderTrabalhos);
 
         // INICIALIZAÇÃO
-        atualizarProgressoEStats();
-        verificarAlertasUrgentes();
+        setTema(localStorage.getItem('theme_repo_v5') || 'dark');
+        atualizarVisibilidadeADM();
+        atualizarOpcoesFiltro();
         renderTrabalhos();
-        renderAvaliacoes();
     </script>
 </body>
 </html>
