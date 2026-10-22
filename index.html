@@ -1,627 +1,215 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt">
 <head>
-    <meta charset="UTF-8">
+    <charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Galeria de Trabalhos & Atividades</title>
-    <!-- Font Awesome Icons & Google Fonts -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
+    <title>Manual de Integração - Microsoft</title>
     <style>
-        /* TEMA ESCURO (PADRÃO) */
         :root {
-            --bg-body: #0f172a;
-            --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
-            --card-bg: rgba(30, 41, 59, 0.85);
-            --card-border: rgba(255, 255, 255, 0.1);
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --accent: #6366f1;
-            --accent-hover: #4f46e5;
-            --accent-light: rgba(99, 102, 241, 0.2);
-            --danger: #f43f5e;
-            --input-bg: rgba(15, 23, 42, 0.8);
-            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
-            --radius-lg: 16px;
-            --radius-md: 10px;
+            --primary-color: #00a4ef;
+            --secondary-color: #7fba00;
+            --dark-color: #2f2f2f;
+            --light-color: #f3f3f3;
+            --accent-color: #ffb900;
         }
 
-        /* TEMA CLARO */
-        [data-theme="light"] {
-            --bg-body: #f1f5f9;
-            --bg-gradient: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-            --card-bg: #ffffff;
-            --card-border: rgba(0, 0, 0, 0.1);
-            --text-main: #0f172a;
-            --text-muted: #475569;
-            --accent: #4f46e5;
-            --accent-hover: #4338ca;
-            --accent-light: rgba(79, 70, 229, 0.12);
-            --danger: #e11d48;
-            --input-bg: #f8fafc;
-            --shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.08);
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f9f9f9;
+            color: var(--dark-color);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; transition: background 0.2s, color 0.2s, border-color 0.2s; }
-        
-        body { 
-            background: var(--bg-body);
-            background-image: var(--bg-gradient); 
-            background-attachment: fixed;
-            color: var(--text-main); 
-            padding: 30px 15px; 
-            min-height: 100vh; 
-        }
-
-        .container { max-width: 1100px; margin: 0 auto; display: flex; flex-direction: column; gap: 24px; }
-        
-        /* HEADER */
-        .header-wrapper { 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            background: var(--card-bg); 
-            border: 1px solid var(--card-border); 
-            border-radius: var(--radius-lg); 
-            padding: 20px 24px; 
-            box-shadow: var(--shadow); 
-            flex-wrap: wrap; 
-            gap: 16px; 
-        }
-
-        .header-title h1 { 
-            font-size: 1.6rem; 
-            font-weight: 700;
-            color: var(--text-main);
-            display: flex; 
-            align-items: center; 
-            gap: 10px; 
-        }
-
-        .header-title p { color: var(--text-muted); font-size: 0.9rem; margin-top: 2px; }
-        .header-actions { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
-        
-        /* BOTÕES */
-        button { cursor: pointer; border: none; font-weight: 600; display: inline-flex; align-items: center; gap: 8px; border-radius: var(--radius-md); }
-        
-        .btn-sec { 
-            background: var(--input-bg); 
-            border: 1px solid var(--card-border); 
-            color: var(--text-main); 
-            padding: 10px 16px; 
-            font-size: 0.85rem; 
-        }
-        .btn-sec:hover { border-color: var(--accent); color: var(--accent); }
-
-        .btn-adm { 
-            background: var(--accent); 
-            color: #fff; 
-            padding: 10px 18px; 
-            font-size: 0.85rem; 
-        }
-        .btn-adm:hover { background: var(--accent-hover); }
-        .btn-adm.logged { background: var(--danger); }
-
-        .btn-add { 
-            background: var(--accent); 
-            color: #fff; 
-            padding: 12px; 
-            justify-content: center; 
-            width: 100%; 
-            font-size: 0.95rem; 
-        }
-
-        .btn-act { 
-            background: var(--accent-light); 
-            color: var(--accent); 
-            padding: 6px 12px; 
-            font-size: 0.8rem; 
-        }
-
-        .btn-del { 
-            color: var(--danger); 
-            background: rgba(244, 63, 94, 0.1); 
-            padding: 6px 12px; 
-            font-size: 0.8rem; 
-        }
-
-        /* PAINÉIS / CARDS */
-        .card { 
-            background: var(--card-bg); 
-            border: 1px solid var(--card-border); 
-            border-radius: var(--radius-lg); 
-            padding: 24px; 
-            box-shadow: var(--shadow); 
-        }
-
-        .card h2, .card h3 { 
-            font-size: 1.2rem; 
-            margin-bottom: 16px; 
-            display: flex; 
-            align-items: center; 
-            gap: 10px; 
-            color: var(--text-main);
-        }
-
-        .adm-banner { 
-            background: var(--accent-light); 
-            border: 1px solid var(--accent); 
-            border-radius: var(--radius-md); 
-            padding: 12px 18px; 
-            color: var(--text-main); 
-            font-size: 0.9rem;
-        }
-
-        /* FILTROS E FORMULÁRIO */
-        .filters-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
-        .ai-hint { font-size: 0.8rem; color: var(--accent); margin-bottom: 8px; font-weight: 500; }
-
-        form { display: flex; flex-direction: column; gap: 12px; }
-        .form-row { display: flex; gap: 12px; flex-wrap: wrap; }
-        .form-row > * { flex: 1; min-width: 180px; }
-        
-        input, select, textarea { 
-            background: var(--input-bg); 
-            border: 1px solid var(--card-border); 
-            color: var(--text-main); 
-            padding: 10px 14px; 
-            border-radius: var(--radius-md); 
-            font-size: 0.9rem; 
-            outline: none; 
-        }
-        input:focus, select:focus, textarea:focus { border-color: var(--accent); }
-
-        /* LISTA E CARDS */
-        .item-list { 
-            list-style: none; 
-            display: grid; 
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); 
-            gap: 20px; 
-        }
-
-        .item-card { 
-            background: var(--card-bg); 
-            border: 1px solid var(--card-border); 
-            border-radius: var(--radius-lg); 
-            padding: 20px; 
-            display: flex; 
-            flex-direction: column; 
-            gap: 12px; 
-            position: relative;
-            box-shadow: var(--shadow);
-        }
-
-        .item-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
-        .item-title { font-size: 1.05rem; font-weight: 700; color: var(--text-main); }
-
-        .badge { font-size: 0.7rem; padding: 4px 8px; border-radius: 12px; text-transform: uppercase; font-weight: 700; }
-        .badge-materia { background: var(--accent-light); color: var(--accent); }
-
-        .item-info { font-size: 0.82rem; color: var(--text-muted); display: flex; gap: 12px; flex-wrap: wrap; }
-        .item-desc { font-size: 0.88rem; color: var(--text-muted); line-height: 1.4; }
-
-        /* FIX DE SOBREPOSIÇÃO DE MÍDIAS */
-        .media-preview { display: flex; flex-direction: column; gap: 10px; margin-top: 6px; clear: both; }
-        
-        .media-img-container {
-            width: 100%;
-            height: 180px;
-            border-radius: var(--radius-md);
-            overflow: hidden;
-            border: 1px solid var(--card-border);
-            position: relative;
-            cursor: pointer;
-            background: #000;
-        }
-
-        .media-img-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
-
-        .media-img-container:hover::after {
-            content: "🔍 Clique para Expandir";
-            position: absolute;
-            inset: 0;
-            background: rgba(0,0,0,0.5);
+        header {
+            background: linear-gradient(135deg, #0078d4, #00a4ef);
             color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border-left: 5px solid var(--primary-color);
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+        }
+
+        .card h2 {
+            margin-top: 0;
+            color: var(--primary-color);
             display: flex;
             align-items: center;
-            justify-content: center;
-            font-size: 0.85rem;
-            font-weight: 600;
+            gap: 10px;
         }
 
-        .video-box { 
-            border-radius: var(--radius-md); 
-            background: rgba(244, 63, 94, 0.1); 
-            padding: 12px; 
-            text-align: center;
-            border: 1px solid rgba(244, 63, 94, 0.2);
-            cursor: pointer;
-            color: var(--danger);
-            font-weight: 600;
-            font-size: 0.85rem;
+        ul {
+            padding-left: 20px;
         }
-        .video-box:hover { background: rgba(244, 63, 94, 0.2); }
 
-        .pdf-box {
-            border-radius: var(--radius-md);
-            border: 1px solid var(--card-border);
-            overflow: hidden;
-            height: 200px;
-            background: var(--input-bg);
+        li {
+            margin-bottom: 8px;
         }
-        .pdf-box iframe { width: 100%; height: 100%; border: none; }
 
-        /* MODAL FULLSCREEN */
-        .modal-fullscreen {
-            display: none;
-            position: fixed;
-            inset: 0;
-            z-index: 99999;
-            background: rgba(0, 0, 0, 0.9);
+        .progress-container {
+            background: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            display: flex;
+            justify-content: space-between;
             align-items: center;
-            justify-content: center;
-            padding: 20px;
         }
-        .modal-fullscreen img { max-width: 95vw; max-height: 90vh; border-radius: 8px; object-fit: contain; }
-        .modal-close { position: absolute; top: 15px; right: 20px; color: white; font-size: 2rem; cursor: pointer; }
 
-        .item-notes { display: none; padding: 8px; background: var(--input-bg); border: 1px dashed var(--card-border); border-radius: var(--radius-md); }
-        .item-notes textarea { width: 100%; min-height: 50px; border: none; background: transparent; }
+        button {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1rem;
+        }
 
-        .item-meta { display: flex; justify-content: space-between; align-items: center; padding-top: 10px; border-top: 1px solid var(--card-border); margin-top: auto; }
-        .empty-state { text-align: center; color: var(--text-muted); padding: 40px; border: 2px dashed var(--card-border); border-radius: var(--radius-lg); grid-column: 1 / -1; }
+        button:hover {
+            opacity: 0.9;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #777;
+            font-size: 0.9rem;
+        }
     </style>
 </head>
 <body>
+
+    <header>
+        <h1>Manual de Integração</h1>
+        <p>Bem-vindo(a) à equipa da Microsoft!</p>
+    </header>
+
     <div class="container">
-        <!-- HEADER PRINCIPAL -->
-        <header class="header-wrapper">
-            <div class="header-title">
-                <h1><i class="fa-solid fa-shapes"></i> Galeria de Trabalhos</h1>
-                <p>Acervo digital de projetos e atividades acadêmicas</p>
+        
+        <!-- Barra de Progresso / Interatividade com JS -->
+        <div class="progress-container">
+            <div>
+                <strong>Progresso da Leitura:</strong> <span id="statusLeitura">Por concluir</span>
             </div>
-            <div class="header-actions">
-                <button class="btn-sec" onclick="exportarBackup()"><i class="fa-solid fa-download"></i> Exportar</button>
-                <button class="btn-sec adm-only" onclick="document.getElementById('import-file').click()" style="display:none;"><i class="fa-solid fa-upload"></i> Importar</button>
-                <input type="file" id="import-file" hidden accept=".json" onchange="importarBackup(event)">
-                <button class="btn-sec" id="theme-toggle" onclick="toggleTema()"><i class="fa-solid fa-moon"></i> <span id="theme-text">Escuro</span></button>
-                <button class="btn-adm" id="adm-toggle" onclick="toggleADM()"><i class="fa-solid fa-lock"></i> <span>Modo ADM</span></button>
-            </div>
-        </header>
-
-        <div id="adm-banner" class="adm-banner" style="display:none;">
-            <i class="fa-solid fa-shield-halved"></i> <strong>Modo Administrador Ativo:</strong> Você pode adicionar ou excluir itens.
+            <button onclick="concluirLeitura()">Marcar como Lido</button>
         </div>
 
-        <!-- FORMULÁRIO -->
-        <section class="card adm-only" style="display:none;">
-            <h2><i class="fa-solid fa-plus-circle"></i> Publicar Novo Trabalho</h2>
-            <form id="form-trabalho">
-                <div class="form-row">
-                    <input type="text" id="t-titulo" placeholder="Título do Projeto *" required>
-                    <input type="text" id="t-materia" list="list-materias" placeholder="Matéria / Disciplina *" required>
-                    <input type="text" id="t-professor" list="list-professores" placeholder="Professor *" required>
-                    <input type="date" id="t-data" required>
-                </div>
-
-                <datalist id="list-materias"></datalist>
-                <datalist id="list-professores"></datalist>
-
-                <div id="ai-hint-t" class="ai-hint" style="display:none;"><i class="fa-solid fa-wand-magic-sparkles"></i> <span id="ai-hint-text-t"></span></div>
-                <textarea id="t-descricao" placeholder="Descrição do trabalho..." rows="3" required></textarea>
-                
-                <div class="form-row">
-                    <input type="url" id="t-imagem" placeholder="Link/URL da Foto (Google Drive / Direct Link)">
-                    <input type="url" id="t-video" placeholder="Link/URL do Vídeo (YouTube / Vimeo)">
-                    <input type="url" id="t-pdf" placeholder="Link/URL do PDF">
-                </div>
-                <button type="submit" class="btn-add"><i class="fa-solid fa-paper-plane"></i> Publicar Trabalho</button>
-            </form>
-        </section>
-
-        <!-- FILTROS -->
+        <!-- 1. Apresentação da empresa -->
         <div class="card">
-            <h3><i class="fa-solid fa-filter"></i> Filtrar Conteúdo</h3>
-            <div class="filters-grid">
-                <input type="text" id="search-input" placeholder="Pesquisar...">
-                <input type="date" id="filter-data" onchange="renderTrabalhos()">
-                <select id="filter-materia" onchange="renderTrabalhos()"><option value="">Todas as Matérias</option></select>
-                <select id="filter-professor" onchange="renderTrabalhos()"><option value="">Todos os Professores</option></select>
-            </div>
+            <h2>🏢 1. Apresentação da Empresa</h2>
+            <p>A Microsoft Corporation é líder mundial em software, serviços, dispositivos e soluções que ajudam pessoas e empresas a realizarem todo o seu potencial[cite: 1]. A nossa missão é capacitar cada pessoa e cada organização do planeta a conquistar mais.</p>
         </div>
 
-        <!-- GALERIA -->
-        <section class="card">
-            <h2><i class="fa-solid fa-folder-open"></i> Atividades Cadastradas</h2>
-            <ul id="lista-trabalhos" class="item-list"></ul>
-        </section>
+        <!-- 2. Regras de convivência -->
+        <div class="card">
+            <h2>🤝 2. Regras de Convivência</h2>
+            <ul>
+                <li>Respeito mútuo pela diversidade e inclusão de todos os colegas[cite: 1].</li>
+                <li>Manter um ambiente de trabalho colaborativo, transparente e empático[cite: 1].</li>
+                <li>Zelar pela limpeza e boa organização dos espaços comuns[cite: 1].</li>
+            </ul>
+        </div>
+
+        <!-- 3. Horários e frequência -->
+        <div class="card">
+            <h2>⏰ 3. Orientações sobre Horários e Frequência</h2>
+            <ul>
+                <li>Flexibilidade planeada com base na política de trabalho híbrido da Microsoft[cite: 1].</li>
+                <li>Registo de ponto digital e alinhamento prévio de horários com o respetivo gestor[cite: 1].</li>
+                <li>Comunicação imediata em caso de imprevistos ou ausências justificadas[cite: 1].</li>
+            </ul>
+        </div>
+
+        <!-- 4. Cuidados com documentos e informações -->
+        <div class="card">
+            <h2>🔒 4. Cuidados com Documentos e Informações</h2>
+            <ul>
+                <li>Uso obrigatório de ferramentas oficiais e seguras da Microsoft (como o SharePoint e OneDrive)[cite: 1].</li>
+                <li>Confidencialidade estrita de dados sensíveis de clientes e da empresa[cite: 1].</li>
+                <li>Proibição de partilha de palavras-passe ou acessos corporativos[cite: 1].</li>
+            </ul>
+        </div>
+
+        <!-- 5. Normas básicas de segurança -->
+        <div class="card">
+            <h2>🛡️ 5. Normas Básicas de Segurança</h2>
+            <ul>
+                <li>Bloquear sempre o computador (Win + L) sempre que se ausentar da mesa[cite: 1].</li>
+                <li>Atenção redobrada a tentativas de <em>phishing</em> ou e-mails suspeitos[cite: 1].</li>
+                <li>Conhecimento prévio das saídas de emergência e procedimentos de evacuação do edifício[cite: 1].</li>
+            </ul>
+        </div>
+
+        <!-- 6. Comunicação com a equipa -->
+        <div class="card">
+            <h2>💬 6. Orientações sobre Comunicação com a Equipa</h2>
+            <ul>
+                <li>O <strong>Microsoft Teams</strong> é o canal principal para reuniões e chat diário[cite: 1].</li>
+                <li>Utilização de e-mail corporativo para comunicações formais[cite: 1].</li>
+                <li>Clareza, objetividade e cordialidade em todas as interações profissionais[cite: 1].</li>
+            </ul>
+        </div>
+
+        <!-- 7. Cinco atitudes esperadas -->
+        <div class="card">
+            <h2>🌟 7. Cinco Atitudes Esperadas de um Bom Profissional</h2>
+            <ol>
+                <li><strong>Mentalidade de Crescimento:</strong> Estar sempre disposto a aprender e a inovar[cite: 1].</li>
+                <li><strong>Colaboração:</strong> Ajudar os colegas e trabalhar em prol do sucesso coletivo[cite: 1].</li>
+                <li><strong>Integridade:</strong> Agir com honestidade e ética em todas as situações[cite: 1].</li>
+                <li><strong>Foco no Cliente:</strong> Colocar as necessidades do utilizador no centro das decisões[cite: 1].</li>
+                <li><strong>Proatividade:</strong> Antecipar problemas e apresentar soluções criativas[cite: 1].</li>
+            </ol>
+        </div>
+
     </div>
 
-    <!-- MODAL IMAGEM FULLSCREEN -->
-    <div id="image-modal" class="modal-fullscreen" onclick="fecharModalImagem()">
-        <span class="modal-close">&times;</span>
-        <img id="modal-img-src" src="" alt="Imagem Ampliada">
-    </div>
+    <footer>
+        <p>&copy; 2026 Microsoft Corporation - Manual de Integração Interno.</p>
+    </footer>
 
+    <!-- Script JavaScript para interatividade -->
     <script>
-        const dicionarioIA = [
-            { p: ['python', 'c++', 'codigo', 'algoritmo', 'site', 'html'], m: 'Programação' },
-            { p: ['robo', 'robotica', 'arduino', 'sensor'], m: 'Robótica' },
-            { p: ['matematica', 'calculo', 'equaçao'], m: 'Matemática' },
-            { p: ['redaçao', 'texto', 'portugues'], m: 'Português' },
-            { p: ['fisica', 'movimento', 'força'], m: 'Física' }
-        ];
-
-        let trabalhos = JSON.parse(localStorage.getItem('trabalhos_repo_v5')) || [];
-        let isADM = false;
-
-        // --- CORREÇÃO 1: MODO CLARO / ESCURO ---
-        function setTema(tema) {
-            if (tema === 'light') {
-                document.documentElement.setAttribute('data-theme', 'light');
-                document.getElementById('theme-toggle').innerHTML = '<i class="fa-solid fa-sun"></i> <span>Claro</span>';
-            } else {
-                document.documentElement.removeAttribute('data-theme');
-                document.getElementById('theme-toggle').innerHTML = '<i class="fa-solid fa-moon"></i> <span>Escuro</span>';
-            }
-            localStorage.setItem('theme_repo_v5', tema);
+        function concluirLeitura() {
+            const status = document.getElementById('statusLeitura');
+            status.textContent = "Concluído com sucesso! Bem-vindo a bordo!";
+            status.style.color = "#7fba00";
+            status.style.fontWeight = "bold";
+            alert("Parabéns por concluir a leitura do manual de integração da Microsoft!");
         }
-
-        function toggleTema() {
-            const atual = localStorage.getItem('theme_repo_v5') === 'light' ? 'dark' : 'light';
-            setTema(atual);
-        }
-
-        // --- CORREÇÃO 2: LINK DE FOTOS (GOOGLE DRIVE & DIRECT LINKS) ---
-        function converterLinkImagem(url) {
-            if (!url) return '';
-            // Converte links de visualização do Google Drive para links diretos de imagem
-            if (url.includes('drive.google.com') && url.includes('/file/d/')) {
-                const id = url.split('/file/d/')[1].split('/')[0].split('?')[0];
-                return `https://lh3.googleusercontent.com/d/${id}`;
-            }
-            // Dropbox Direct Fix
-            if (url.includes('dropbox.com')) {
-                return url.replace('www.dropbox.com', 'dl.dropboxusercontent.com').replace('?dl=0', '');
-            }
-            return url;
-        }
-
-        // --- CORREÇÃO 3: EXPORTAR BACKUP ---
-        function exportarBackup() {
-            if (trabalhos.length === 0) {
-                alert("Não há trabalhos para exportar!");
-                return;
-            }
-            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(trabalhos, null, 2));
-            const downloadAnchor = document.createElement('a');
-            downloadAnchor.setAttribute("href", dataStr);
-            downloadAnchor.setAttribute("download", `backup_trabalhos_${new Date().toISOString().slice(0, 10)}.json`);
-            document.body.appendChild(downloadAnchor);
-            downloadAnchor.click();
-            downloadAnchor.remove();
-        }
-
-        function importarBackup(e) {
-            const file = e.target.files[0];
-            if (!file) return;
-            const reader = new FileReader();
-            reader.onload = (evt) => {
-                try {
-                    trabalhos = JSON.parse(evt.target.result);
-                    salvar(); 
-                    renderTrabalhos(); 
-                    alert('Dados importados com sucesso!');
-                } catch (err) { alert('Erro ao ler arquivo JSON!'); }
-            };
-            reader.readAsText(file);
-        }
-
-        // ADM & CONTROLES
-        function toggleADM() {
-            if (!isADM) {
-                const senha = prompt("Insira a senha ADM:");
-                if (senha === "admin123") isADM = true;
-                else if (senha !== null) alert("Senha incorreta!");
-            } else {
-                isADM = false;
-            }
-            atualizarVisibilidadeADM();
-        }
-
-        function atualizarVisibilidadeADM() {
-            const btn = document.getElementById('adm-toggle');
-            const admElements = document.querySelectorAll('.adm-only');
-            const banner = document.getElementById('adm-banner');
-
-            if (isADM) {
-                btn.innerHTML = '<i class="fa-solid fa-unlock"></i> <span>Sair ADM</span>';
-                btn.classList.add('logged');
-                admElements.forEach(el => el.style.display = 'block');
-                banner.style.display = 'block';
-            } else {
-                btn.innerHTML = '<i class="fa-solid fa-lock"></i> <span>Modo ADM</span>';
-                btn.classList.remove('logged');
-                admElements.forEach(el => el.style.display = 'none');
-                banner.style.display = 'none';
-            }
-            renderTrabalhos();
-        }
-
-        // AUTOCOMPLETE DE IA
-        document.getElementById('t-titulo').addEventListener('input', (e) => {
-            const matInput = document.getElementById('t-materia');
-            const hintBox = document.getElementById('ai-hint-t');
-            const txt = e.target.value.toLowerCase();
-            const match = dicionarioIA.find(item => item.p.some(p => txt.includes(p)));
-            if (match && !matInput.value) {
-                matInput.value = match.m;
-                document.getElementById('ai-hint-text-t').innerText = `Sugestão de Matéria: ${match.m}`;
-                hintBox.style.display = 'block';
-            } else if (!match) hintBox.style.display = 'none';
-        });
-
-        function salvar() {
-            localStorage.setItem('trabalhos_repo_v5', JSON.stringify(trabalhos));
-            atualizarOpcoesFiltro();
-        }
-
-        function atualizarOpcoesFiltro() {
-            const matSelect = document.getElementById('filter-materia');
-            const profSelect = document.getElementById('filter-professor');
-            const listMat = document.getElementById('list-materias');
-            const listProf = document.getElementById('list-professores');
-
-            const materias = [...new Set(trabalhos.map(t => t.materia))].filter(Boolean);
-            const professores = [...new Set(trabalhos.map(t => t.professor))].filter(Boolean);
-
-            matSelect.innerHTML = '<option value="">Todas as Matérias</option>' + materias.map(m => `<option value="${m}">${m}</option>`).join('');
-            profSelect.innerHTML = '<option value="">Todos os Professores</option>' + professores.map(p => `<option value="${p}">${p}</option>`).join('');
-
-            listMat.innerHTML = materias.map(m => `<option value="${m}">`).join('');
-            listProf.innerHTML = professores.map(p => `<option value="${p}">`).join('');
-        }
-
-        // CADASTRO DE ITEM
-        document.getElementById('form-trabalho').addEventListener('submit', (e) => {
-            e.preventDefault();
-            if (!isADM) return;
-
-            trabalhos.push({
-                id: Date.now(),
-                titulo: document.getElementById('t-titulo').value,
-                materia: document.getElementById('t-materia').value,
-                professor: document.getElementById('t-professor').value,
-                data: document.getElementById('t-data').value,
-                descricao: document.getElementById('t-descricao').value,
-                imagem: document.getElementById('t-imagem').value,
-                video: document.getElementById('t-video').value,
-                pdf: document.getElementById('t-pdf').value,
-                notas: ''
-            });
-
-            salvar();
-            renderTrabalhos();
-            e.target.reset();
-            document.getElementById('ai-hint-t').style.display = 'none';
-        });
-
-        function deletar(id) {
-            if (!isADM) return;
-            if (confirm("Remover trabalho?")) {
-                trabalhos = trabalhos.filter(i => i.id !== id);
-                salvar();
-                renderTrabalhos();
-            }
-        }
-
-        function abrirModalImagem(src) {
-            document.getElementById('modal-img-src').src = src;
-            document.getElementById('image-modal').style.display = 'flex';
-        }
-
-        function fecharModalImagem() {
-            document.getElementById('image-modal').style.display = 'none';
-        }
-
-        function toggleNotas(id) {
-            const el = document.getElementById(`notes-${id}`);
-            el.style.display = el.style.display === 'block' ? 'none' : 'block';
-        }
-
-        function salvarNotas(id, val) {
-            if (!isADM) return;
-            const item = trabalhos.find(i => i.id === id);
-            if (item) item.notas = val;
-            salvar();
-        }
-
-        // RENDERIZAR TELA
-        function renderTrabalhos() {
-            const list = document.getElementById('lista-trabalhos');
-            const txt = document.getElementById('search-input').value.toLowerCase();
-            const filterData = document.getElementById('filter-data').value;
-            const filterMat = document.getElementById('filter-materia').value;
-            const filterProf = document.getElementById('filter-professor').value;
-
-            const filtrados = trabalhos.filter(t => {
-                const matchTxt = t.titulo.toLowerCase().includes(txt) || t.descricao.toLowerCase().includes(txt);
-                const matchData = !filterData || t.data === filterData;
-                const matchMat = !filterMat || t.materia === filterMat;
-                const matchProf = !filterProf || t.professor === filterProf;
-                return matchTxt && matchData && matchMat && matchProf;
-            });
-
-            if (!filtrados.length) {
-                list.innerHTML = '<div class="empty-state"><i class="fa-regular fa-folder-open fa-2x"></i><br><br>Nenhum trabalho cadastrado ou encontrado.</div>';
-                return;
-            }
-
-            list.innerHTML = filtrados.map(item => {
-                const imgTratada = converterLinkImagem(item.imagem);
-                const pData = item.data ? item.data.split('-') : [];
-                const dataFmt = pData.length === 3 ? `${pData[2]}/${pData[1]}/${pData[0]}` : 'Data N/I';
-
-                return `
-                <li class="item-card">
-                    <div class="item-header">
-                        <div class="item-title">${item.titulo}</div>
-                        <span class="badge badge-materia">${item.materia}</span>
-                    </div>
-                    
-                    <div class="item-info">
-                        <span><i class="fa-solid fa-user"></i> ${item.professor}</span>
-                        <span><i class="fa-solid fa-calendar"></i> ${dataFmt}</span>
-                    </div>
-
-                    <div class="item-desc">${item.descricao}</div>
-
-                    <div class="media-preview">
-                        ${imgTratada ? `
-                            <div class="media-img-container" onclick="abrirModalImagem('${imgTratada}')">
-                                <img src="${imgTratada}" alt="Imagem do Projeto" onerror="this.parentElement.style.display='none'">
-                            </div>
-                        ` : ''}
-
-                        ${item.video ? `
-                            <div class="video-box" onclick="window.open('${item.video}', '_blank')">
-                                <i class="fa-brands fa-youtube"></i> Abrir Vídeo
-                            </div>
-                        ` : ''}
-
-                        ${item.pdf ? `
-                            <div class="pdf-box">
-                                <iframe src="${item.pdf}"></iframe>
-                            </div>
-                        ` : ''}
-                    </div>
-
-                    <div class="item-notes" id="notes-${item.id}">
-                        <textarea ${!isADM ? 'disabled' : ''} onblur="salvarNotas(${item.id}, this.value)" placeholder="Anotações internas...">${item.notas || ''}</textarea>
-                    </div>
-
-                    <div class="item-meta">
-                        <button class="btn-act" onclick="toggleNotas(${item.id})"><i class="fa-regular fa-sticky-note"></i> Notas</button>
-                        ${isADM ? `<button class="btn-del" onclick="deletar(${item.id})"><i class="fa-regular fa-trash-can"></i> Excluir</button>` : ''}
-                    </div>
-                </li>
-                `;
-            }).join('');
-        }
-
-        document.getElementById('search-input').addEventListener('input', renderTrabalhos);
-
-        // INICIALIZAÇÃO
-        setTema(localStorage.getItem('theme_repo_v5') || 'dark');
-        atualizarVisibilidadeADM();
-        atualizarOpcoesFiltro();
-        renderTrabalhos();
     </script>
+
 </body>
 </html>
